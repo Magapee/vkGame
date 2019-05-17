@@ -1,3 +1,3 @@
 
 class LiteDatabase(object):
-    pass
+    raise NotImplemented

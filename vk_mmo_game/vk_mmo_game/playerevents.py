@@ -1,9 +1,6 @@
-
-
-
 def registration():
-    pass
+    raise NotImplemented
 
 
 def get_hero_information():
-    pass
+    raise NotImplemented

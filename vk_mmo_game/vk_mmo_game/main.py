@@ -2,4 +2,5 @@ import vkgame
 
 
 if __name__ == '__main__':
-    print('Game nahoi!')
+    game = vkgame.Game()
+    game.process()

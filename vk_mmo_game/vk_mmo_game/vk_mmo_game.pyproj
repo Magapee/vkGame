@@ -21,6 +21,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="vk_token.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="vkgame.py">
       <SubType>Code</SubType>
     </Compile>
