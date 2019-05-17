@@ -1,4 +1,4 @@
-import Game
+import vkgame
 
 
 if __name__ == '__main__':

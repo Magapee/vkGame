@@ -1,0 +1,3 @@
+
+class LiteDatabase(object):
+    pass
