@@ -12,7 +12,7 @@ import random
 
 class Player():
     def __init__(self):
-        self.count = 0
+        self.flag = True
 
     def quest(self, vk, event, database):#Квест, надо допилить
         if event.text == "exp +1":
@@ -58,32 +58,3 @@ class Player():
             return(True)
         else:
             return(False)
-
-    def get_battle_link(self, vk, event, database):
-        if event.text == 'Дуэль':
-            logger.log("battle", event.user_id)
-            link = """duel_""" + str(self.count)
-            self.count = self.count + 1
-            database.update("""battlelink""", """'""" + link + """'""", event.user_id)
-            vk.messages.send(user_id=event.user_id, message=link, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
-    
-    def check_battle_link(self, vk, event, database):
-        cur = database.select("""*""", """battlelink""", """'""" + event.text + """'""")
-        if cur != []:
-            if cur[0][0] != event.user_id:
-                database.update("""battlelink""", """NULL""", cur[0][0])
-                database.update("""battlelink""", """NULL""", event.user_id)
-                cube = random.randrange(0, 2, 1)
-                if cube == 1:
-                    database.update("""winscounter""", """winscounter + 1""", event.user_id)
-                if cube == 0:
-                    database.update("""winscounter""", """winscounter + 1""", cur[0][0])
-                vk.messages.send(user_id=event.user_id, message=constants.cube[cube], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
-                vk.messages.send(user_id=cur[0][0], message=constants.cube[cube - 1], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
-            else:
-                vk.messages.send(user_id=event.user_id, message="Нельзя драться с собой", random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
-
-    def get_battle_stats(self, vk, event, database):
-        if event.text == 'Статистика':
-            database.select("""winscounter""", """id""", event.user_id)
-            vk.messages.send(user_id=event.user_id, message="Побед:" + str(database.select("""winscounter""", """id""", event.user_id)[0][0]), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())

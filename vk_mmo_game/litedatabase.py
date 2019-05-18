@@ -21,11 +21,11 @@ class LiteDatabase():
         self.conn.commit()
         return(self.cursor.fetchall())
 
-    def update(self, field, value, user_id, param = "id"):
-        self.cursor.execute("""UPDATE users SET """ + str(field) + """ = """ + str(value) + """ WHERE """ + param + """ = """ + str(user_id))
+    def update(self, field, value, user_id):
+        self.cursor.execute("""UPDATE users SET """ + str(field) + """ = """ + str(value) + """ WHERE id = """ + str(user_id))
         self.conn.commit()
         return(self.cursor.fetchall())
 
     def insert(self, user_id, name):
-        self.cursor.execute("""INSERT INTO users VALUES ( """ + str(user_id) + """, '""" + str(name) + """', 0, 0, 1, 0, NULL, 0)""")
+        self.cursor.execute("""INSERT INTO users VALUES ( """ + str(user_id) + """, '""" + str(name) + """', 0, 0, 1, 0)""")
         self.conn.commit()
