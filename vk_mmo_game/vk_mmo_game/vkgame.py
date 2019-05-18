@@ -2,11 +2,11 @@ import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 import random
 
-from litedatabase import LiteDatabase
+from litedb import LiteDB
 from player import Player
 import keyboard
 import logger
-import constants
+import const
 
 class Game():
     def __init__(self):

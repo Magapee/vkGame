@@ -1,5 +1,5 @@
-import constants
-from litedatabase import LiteDatabase
+import const
+from litedb import LiteDatabase
 
 def get_message(user_id, database):
     info = database.select("""*""", """id""", user_id)

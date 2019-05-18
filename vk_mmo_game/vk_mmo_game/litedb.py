@@ -1,6 +1,6 @@
 import sqlite3
 
-class LiteDatabase():
+class LiteDB():
     def __init__(self):
         self.conn = sqlite3.connect("Users.db")
         self.cursor = self.conn.cursor()
