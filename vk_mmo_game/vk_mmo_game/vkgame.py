@@ -1,6 +1,7 @@
 import random
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
+from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType #не используется на данный момент
 from litedb import LiteDB
 from player import Player
 import keyboard
@@ -24,7 +25,6 @@ class Game():
         self.player = Player()
 
     def process(self):
-        #counter = 0
         while self.is_running:
             event = self.longpoll.check()[0]
             if event:
@@ -34,14 +34,13 @@ class Game():
     def _proc_event(self, event):
         if not event.from_me:
             if event.type == VkEventType.MESSAGE_NEW and event.text:
-                #self.counter = self.counter + 1
                 random.seed()
-                database = LiteDB()
+                database = LiteDB() #maga: почему не при запуске?
                 #---------------------------------------------------------------stop
                 self.is_running = self.player.stop(self.vk, event)
                 #---------------------------------------------------------------stop
-                self.player.reg(self.vk, event, database)#Регистрация
-                if self.player.is_registered(event.user_id, database):#Проверка для ивентов
+                self.player.reg(self.vk, event, database) #Регистрация maga: нужна ли тут проверка на регистрацию, типа, если не зареган, то регаем
+                if self.player.is_registered(event.user_id, database): #Проверка для инвентов maga: точно не так, мы n раз сравниваем строку
                     self.player.quest(self.vk, event, database)
                     self.player.hero(self.vk, event, database)
                     self.player.get_battle_link(self.vk, event, database)
