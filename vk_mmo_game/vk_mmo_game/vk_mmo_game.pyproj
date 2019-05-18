@@ -21,9 +21,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="vk_token.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="const.py" />
+    <Compile Include="getheromessage.py" />
+    <Compile Include="keyboard.py" />
+    <Compile Include="logger.py" />
     <Compile Include="vkgame.py">
       <SubType>Code</SubType>
     </Compile>
@@ -34,9 +35,7 @@
     <Compile Include="player.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="playerevents.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="vk_tocken.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

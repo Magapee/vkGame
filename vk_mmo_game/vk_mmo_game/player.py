@@ -2,8 +2,8 @@ import logger
 import random
 import keyboard
 import getheromessage
-import constants
-from litedatabase import LiteDatabase
+import const
+from litedb import LiteDB
 
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
@@ -28,7 +28,7 @@ class Player():
 
     def stop(self, vk, event):#Остановка бота, тестовый функционал
         if event.text == 'Stop':
-            if event.user_id in constants.admins:
+            if event.user_id in const.admins:
                 vk.messages.send(user_id=event.user_id, message='Ok', random_id = random.randrange(1, 10000, 1))
                 logger.log("Stop", event.user_id)
                 return(False)
@@ -45,8 +45,8 @@ class Player():
             user = vk.users.get(user_ids = event.user_id)[0]
             database.insert(event.user_id, str(user['last_name']) + ' ' + str(user['first_name']))
         elif cur == [(0,)]:
-            if event.text in constants.fracs1:
-                database.update("""countryid""", constants.fracs1[event.text], event.user_id)
+            if event.text in const.fracs1:
+                database.update("""countryid""", const.fracs1[event.text], event.user_id)
                 vk.messages.send(user_id=event.user_id, message='Вами выбрана фракция: ' + event.text, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
             else:
                 vk.messages.send(user_id=event.user_id, message='Выберите фракцию', random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyTwo())
@@ -59,7 +59,7 @@ class Player():
         else:
             return(False)
 
-    def get_battle_link(self, vk, event, database):
+    def get_battle_link(self, vk, event, database): #генерация ссылки для дуэли
         if event.text == 'Дуэль':
             logger.log("battle", event.user_id)
             link = """duel_""" + str(self.count)
@@ -67,7 +67,7 @@ class Player():
             database.update("""battlelink""", """'""" + link + """'""", event.user_id)
             vk.messages.send(user_id=event.user_id, message=link, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
     
-    def check_battle_link(self, vk, event, database):
+    def check_battle_link(self, vk, event, database): #дуэль по ссылке
         cur = database.select("""*""", """battlelink""", """'""" + event.text + """'""")
         if cur != []:
             if cur[0][0] != event.user_id:
@@ -78,8 +78,8 @@ class Player():
                     database.update("""winscounter""", """winscounter + 1""", event.user_id)
                 if cube == 0:
                     database.update("""winscounter""", """winscounter + 1""", cur[0][0])
-                vk.messages.send(user_id=event.user_id, message=constants.cube[cube], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
-                vk.messages.send(user_id=cur[0][0], message=constants.cube[cube - 1], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
+                vk.messages.send(user_id=event.user_id, message=const.cube[cube], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
+                vk.messages.send(user_id=cur[0][0], message=const.cube[cube - 1], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
             else:
                 vk.messages.send(user_id=event.user_id, message="Нельзя драться с собой", random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
 

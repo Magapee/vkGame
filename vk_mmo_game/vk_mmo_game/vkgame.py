@@ -1,17 +1,18 @@
+import random
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
-import random
-
 from litedb import LiteDB
 from player import Player
 import keyboard
 import logger
 import const
+import vk_tocken
+
 
 class Game():
     def __init__(self):
         logger.logger()
-        vk_session = vk_api.VkApi(token = constants.token)
+        vk_session = vk_api.VkApi(token = vk_tocken.tocken)
         try:
             vk_session.auth(token_only=True)
         except vk_api.AuthError as error_msg:
@@ -23,21 +24,19 @@ class Game():
         self.player = Player()
 
     def process(self):
+        #counter = 0
         while self.is_running:
-            #print(len(self.longpoll.check()), self.counter)
-            #event = self.longpoll.check()[self.counter]
-            #if event:
-            for event in self.longpoll.listen():
+            event = self.longpoll.check()[0]
+            if event:
                 self._proc_event(event)
-                if self.is_running == False:#Временный функционал, для тестов
-                    break
+
            
     def _proc_event(self, event):
         if not event.from_me:
             if event.type == VkEventType.MESSAGE_NEW and event.text:
                 #self.counter = self.counter + 1
                 random.seed()
-                database = LiteDatabase()
+                database = LiteDB()
                 #---------------------------------------------------------------stop
                 self.is_running = self.player.stop(self.vk, event)
                 #---------------------------------------------------------------stop
