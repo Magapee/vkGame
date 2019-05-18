@@ -103,8 +103,7 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-#tocken
-vk_token.py
+
 
 #ide configs
 *.vs/
@@ -137,3 +136,6 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
+
+#tocken
+/vk_mmo_game/vk_mmo_game/vk_tocken.py
