@@ -27,5 +27,5 @@ class LiteDatabase():
         return(self.cursor.fetchall())
 
     def insert(self, user_id, name):
-        self.cursor.execute("""INSERT INTO users VALUES ( """ + str(user_id) + """, '""" + str(name) + """', 0, 0, 1, 0)""")
+        self.cursor.execute("""INSERT INTO users VALUES ( """ + str(user_id) + """, '""" + str(name) + """', 0, 0, 1, 0, NULL, 0)""")
         self.conn.commit()
