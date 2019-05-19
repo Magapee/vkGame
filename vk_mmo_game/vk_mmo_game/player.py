@@ -3,6 +3,7 @@ import random
 import keyboard
 import getheromessage
 import const
+import str_const
 from litedb import LiteDB
 
 import vk_api
@@ -44,8 +45,8 @@ class PlayerManager():
             user = vk.users.get(user_ids = event.user_id)[0]
             database.insert(event.user_id, str(user['last_name']) + ' ' + str(user['first_name']))
         elif cur == [(0,)]:
-            if event.text in const.fracs1:
-                database.update("""countryid""", const.fracs1[event.text], event.user_id)
+            if event.text in str_const.fracs1:
+                database.update("""countryid""", str_const.fracs1[event.text], event.user_id)
                 vk.messages.send(user_id=event.user_id, message='Вами выбрана фракция: ' + event.text, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
             else:
                 vk.messages.send(user_id=event.user_id, message='Выберите фракцию', random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
