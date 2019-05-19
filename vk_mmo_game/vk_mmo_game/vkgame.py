@@ -42,10 +42,4 @@ class Game():
                 #---------------------------------------------------------------stop
                 self.is_running = self.player.stop(self.vk, event)
                 #---------------------------------------------------------------stop
-                self.player.reg(self.vk, event, database) #Регистрация maga: нужна ли тут проверка на регистрацию, типа, если не зареган, то регаем
-                if self.player.is_registered(event.user_id, database): #Проверка для инвентов maga: точно не так, мы n раз сравниваем строку
-                    self.player.quest(self.vk, event, database)
-                    self.player.hero(self.vk, event, database)
-                    self.player.get_battle_link(self.vk, event, database)
-                    self.player.check_battle_link(self.vk, event, database)
-                    self.player.get_battle_stats(self.vk, event, database)
+                self.player.event_handling(self.vk, event, database) 
