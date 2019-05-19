@@ -16,9 +16,9 @@ class PlayerManager():
 
     def quest(self, vk, event, database):#Квест, надо допилить
         if event.text == "exp +1":
-            database.update("""exp""", """exp + 1""", event.user_id)
+            database.set("""exp""", """exp + 1""", event.user_id)
             logger.log("+1 exp", event.user_id)
-            database.update("""lvl""", database.checklvl(database.select("""exp""", """id""", event.user_id)[0][0], event.user_id), event.user_id)
+            database.set("""lvl""", database.checklvl(database.select("""exp""", """id""", event.user_id)[0][0], event.user_id), event.user_id)
             vk.messages.send(user_id=event.user_id, message='Ok', random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
 
     def hero(self, vk, event, database):#Вызов профиля
@@ -42,11 +42,10 @@ class PlayerManager():
         cur = database.select("""countryid""", """id""", event.user_id)
         if cur == []:
             vk.messages.send(user_id=event.user_id, message='Выберите фракцию', random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyTwo())
-            user = vk.users.get(user_ids = event.user_id)[0]
-            database.insert(event.user_id, str(user['last_name']) + ' ' + str(user['first_name']))
+            database.insert_new(event.user_id)
         elif cur == [(0,)]:
             if event.text in const.fracs1:
-                database.update("""countryid""", const.fracs1[event.text], event.user_id)
+                database.set("""countryid""", const.fracs1[event.text], event.user_id)
                 vk.messages.send(user_id=event.user_id, message='Вами выбрана фракция: ' + event.text, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
             else:
                 vk.messages.send(user_id=event.user_id, message='Выберите фракцию', random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyTwo())
@@ -64,21 +63,21 @@ class PlayerManager():
             logger.log("battle", event.user_id)
             link = """duel_""" + str(self.count)
             self.count = self.count + 1
-            database.update("""battlelink""", """'""" + link + """'""", event.user_id)
+            database.set("""battlelink""", """'""" + link + """'""", event.user_id)
             vk.messages.send(user_id=event.user_id, message=link, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
     
     def check_battle_link(self, vk, event, database): #дуэль по ссылке
         cur = database.select("""*""", """battlelink""", """'""" + event.text + """'""")
         if cur != []:
             if cur[0][0] != event.user_id:
-                database.update("""battlelink""", """NULL""", cur[0][0])
-                database.update("""battlelink""", """NULL""", event.user_id)
+                database.set("""battlelink""", """NULL""", cur[0][0])
+                database.set("""battlelink""", """NULL""", event.user_id)
                 cube = random.randrange(0, 2, 1)
                 cube1 = {-1:"Победа", 0:"Поражение", 1:"Победа"}
                 if cube == 1:
-                    database.update("""winscounter""", """winscounter + 1""", event.user_id)
+                    database.set("""winscounter""", """winscounter + 1""", event.user_id)
                 if cube == 0:
-                    database.update("""winscounter""", """winscounter + 1""", cur[0][0])
+                    database.set("""winscounter""", """winscounter + 1""", cur[0][0])
                 vk.messages.send(user_id=event.user_id, message=cube1[cube], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
                 vk.messages.send(user_id=cur[0][0], message=cube1[cube - 1], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
             else:
