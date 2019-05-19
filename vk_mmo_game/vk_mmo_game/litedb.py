@@ -29,7 +29,7 @@ class LiteDB():
         return self.cursor.fetchall()
 
     def get(self, field, user):
-        return self.check(field, """id""", user)
+        return self.select(field, """id""", user)
     
     def insert_new(self, user_id):
         message = """INSERT INTO users VALUES ( """ + str(user_id) + """, """ + const.begin_gold + """, """ + const.beging_exp + """, """ + const.begin_lvl +  """, """ + const.begin_country +  """, """ + """NULL""" +  """, """ + const.begin_win + """ )"""
