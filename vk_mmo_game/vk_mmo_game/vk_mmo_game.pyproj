@@ -35,7 +35,7 @@
     <Compile Include="player.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="vk_tocken.py" />
+    <Compile Include="vk_token.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
