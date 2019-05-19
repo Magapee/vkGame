@@ -19,12 +19,12 @@ class PlayerManager():
             database.update("""exp""", """exp + 1""", event.user_id)
             logger.log("+1 exp", event.user_id)
             database.update("""lvl""", database.checklvl(database.select("""exp""", """id""", event.user_id)[0][0], event.user_id), event.user_id)
-            vk.messages.send(user_id=event.user_id, message='Ok', random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
+            vk.messages.send(user_id=event.user_id, message='Ok', random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
 
     def hero(self, vk, event, database):#Вызов профиля
         if event.text == 'hero':
             logger.log("hero", event.user_id)
-            vk.messages.send(user_id=event.user_id, message=getheromessage.get_message(event.user_id, database), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
+            vk.messages.send(user_id=event.user_id, message=getheromessage.get_message(event.user_id, database), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
 
     def stop(self, vk, event):#Остановка бота, тестовый функционал
         if event.text == 'Stop':
@@ -41,15 +41,15 @@ class PlayerManager():
     def reg(self, vk, event, database):#Регистрация пользователя
         cur = database.select("""countryid""", """id""", event.user_id)
         if cur == []:
-            vk.messages.send(user_id=event.user_id, message='Выберите фракцию', random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyTwo())
+            vk.messages.send(user_id=event.user_id, message='Выберите фракцию', random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(1, event.user_id))
             user = vk.users.get(user_ids = event.user_id)[0]
             database.insert(event.user_id, str(user['last_name']) + ' ' + str(user['first_name']))
         elif cur == [(0,)]:
             if event.text in const.fracs1:
                 database.update("""countryid""", const.fracs1[event.text], event.user_id)
-                vk.messages.send(user_id=event.user_id, message='Вами выбрана фракция: ' + event.text, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
+                vk.messages.send(user_id=event.user_id, message='Вами выбрана фракция: ' + event.text, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
             else:
-                vk.messages.send(user_id=event.user_id, message='Выберите фракцию', random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyTwo())
+                vk.messages.send(user_id=event.user_id, message='Выберите фракцию', random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
             logger.log("registration", event.user_id)
 
     def is_registered(self, user_id, database):#Проверка, зарегистрирован ли пользователь
@@ -65,7 +65,7 @@ class PlayerManager():
             link = """duel_""" + str(self.count)
             self.count = self.count + 1
             database.update("""battlelink""", """'""" + link + """'""", event.user_id)
-            vk.messages.send(user_id=event.user_id, message=link, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
+            vk.messages.send(user_id=event.user_id, message=link, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
     
     def check_battle_link(self, vk, event, database): #дуэль по ссылке
         cur = database.select("""*""", """battlelink""", """'""" + event.text + """'""")
@@ -79,12 +79,12 @@ class PlayerManager():
                     database.update("""winscounter""", """winscounter + 1""", event.user_id)
                 if cube == 0:
                     database.update("""winscounter""", """winscounter + 1""", cur[0][0])
-                vk.messages.send(user_id=event.user_id, message=cube1[cube], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
-                vk.messages.send(user_id=cur[0][0], message=cube1[cube - 1], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
+                vk.messages.send(user_id=event.user_id, message=cube1[cube], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
+                vk.messages.send(user_id=cur[0][0], message=cube1[cube - 1], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
             else:
-                vk.messages.send(user_id=event.user_id, message="Нельзя драться с собой", random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
+                vk.messages.send(user_id=event.user_id, message="Нельзя драться с собой", random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
 
     def get_battle_stats(self, vk, event, database):
         if event.text == 'Статистика':
             database.select("""winscounter""", """id""", event.user_id)
-            vk.messages.send(user_id=event.user_id, message="Побед:" + str(database.select("""winscounter""", """id""", event.user_id)[0][0]), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
+            vk.messages.send(user_id=event.user_id, message="Побед:" + str(database.select("""winscounter""", """id""", event.user_id)[0][0]), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))

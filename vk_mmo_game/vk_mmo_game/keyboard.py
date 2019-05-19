@@ -1,4 +1,5 @@
 import json
+import const
 
 def get_button(label, color, payload=""):
     return {
@@ -10,29 +11,45 @@ def get_button(label, color, payload=""):
         "color": color
     }
 
-def getKeyOne():
-    keyboard1 = {
-        "one_time": False,
-        "buttons": [
-        [get_button(label="hero", color="positive"), get_button(label="exp +1", color="positive")],
-        [get_button(label="Дуэль", color="positive"), get_button(label="Статистика", color="positive")],
-        [get_button(label="Stop", color="negative")]
-        ]
-    }
-    keyboard1 = json.dumps(keyboard1, ensure_ascii=False).encode('utf-8')
-    keyboard1 = str(keyboard1.decode('utf-8'))
-    return(keyboard1)
-
-def getKeyTwo():
-    keyboard2 = {
-        "one_time": True,
-        "buttons": [
-        [get_button(label="Сумрачный замок", color="primary")],
-        [get_button(label="Мятный замок", color="positive")],
-        [get_button(label="Пидорский замок", color="negative")]
-        
-        ]
-    }
-    keyboard2 = json.dumps(keyboard2, ensure_ascii=False).encode('utf-8')
-    keyboard2 = str(keyboard2.decode('utf-8'))
-    return(keyboard2)
+def getKey(number, user_id):
+    if user_id in const.admins:
+        if number == 1:
+            keyboard = {
+                "one_time": True,
+                "buttons": [
+                [get_button(label="Сумрачный замок", color="primary")],
+                [get_button(label="Мятный замок", color="positive")],
+                [get_button(label="Пидорский замок", color="negative")],
+                [get_button(label="Stop", color="negative")]
+            ]
+        }
+        elif number == 2:
+            keyboard = {
+                "one_time": False,
+                "buttons": [
+                [get_button(label="hero", color="positive"), get_button(label="exp +1", color="positive")],
+                [get_button(label="Дуэль", color="positive"), get_button(label="Статистика", color="positive")],
+                [get_button(label="Stop", color="negative")]
+                ]
+            }
+    else:
+        if number == 1:
+            keyboard = {
+                "one_time": True,
+                "buttons": [
+                [get_button(label="Сумрачный замок", color="primary")],
+                [get_button(label="Мятный замок", color="positive")],
+                [get_button(label="Пидорский замок", color="negative")]
+            ]
+        }
+        elif number == 2:
+            keyboard = {
+                "one_time": False,
+                "buttons": [
+                [get_button(label="hero", color="positive"), get_button(label="exp +1", color="positive")],
+                [get_button(label="Дуэль", color="positive"), get_button(label="Статистика", color="positive")],
+                ]
+            }
+    keyboard = json.dumps(keyboard, ensure_ascii=False).encode('utf-8')
+    keyboard = str(keyboard.decode('utf-8'))
+    return keyboard
