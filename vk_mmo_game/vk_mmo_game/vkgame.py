@@ -8,11 +8,14 @@ import keyboard
 import logger
 import const
 import vk_token
+import str_const
 
+__version__="0.0.1a"
 
 class Game():
     def __init__(self):
         logger.logger()
+        str_const.set_fracs_list()
         vk_session = vk_api.VkApi(token = vk_token.token)
         try:
             vk_session.auth(token_only=True)
