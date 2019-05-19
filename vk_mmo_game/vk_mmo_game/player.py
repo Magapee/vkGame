@@ -10,7 +10,7 @@ from vk_api.longpoll import VkLongPoll, VkEventType
 import random
 
 
-class Player():
+class PlayerManager():
     def __init__(self):
         self.count = 0
 
@@ -74,12 +74,13 @@ class Player():
                 database.update("""battlelink""", """NULL""", cur[0][0])
                 database.update("""battlelink""", """NULL""", event.user_id)
                 cube = random.randrange(0, 2, 1)
+                cube1 = {-1:"Победа", 0:"Поражение", 1:"Победа"}
                 if cube == 1:
                     database.update("""winscounter""", """winscounter + 1""", event.user_id)
                 if cube == 0:
                     database.update("""winscounter""", """winscounter + 1""", cur[0][0])
-                vk.messages.send(user_id=event.user_id, message=const.cube[cube], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
-                vk.messages.send(user_id=cur[0][0], message=const.cube[cube - 1], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
+                vk.messages.send(user_id=event.user_id, message=cube1[cube], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
+                vk.messages.send(user_id=cur[0][0], message=cube1[cube - 1], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
             else:
                 vk.messages.send(user_id=event.user_id, message="Нельзя драться с собой", random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKeyOne())
 

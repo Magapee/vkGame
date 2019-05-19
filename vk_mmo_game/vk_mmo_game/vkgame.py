@@ -1,19 +1,19 @@
 import random
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
-from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType #не используется на данный момент
+#from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType #не используется на данный момент
 from litedb import LiteDB
-from player import Player
+from player import PlayerManager
 import keyboard
 import logger
 import const
-import vk_tocken
+import vk_token
 
 
 class Game():
     def __init__(self):
         logger.logger()
-        vk_session = vk_api.VkApi(token = vk_tocken.tocken)
+        vk_session = vk_api.VkApi(token = vk_token.token)
         try:
             vk_session.auth(token_only=True)
         except vk_api.AuthError as error_msg:
@@ -22,20 +22,23 @@ class Game():
         self.longpoll = VkLongPoll(vk_session)
         self.is_running = True
         #self.counter = 0
-        self.player = Player()
+        self.player = PlayerManager()
 
     def process(self):
         while self.is_running:
-            event = self.longpoll.check()[0]
-            if event:
-                self._proc_event(event)
+            events = self.longpoll.check()
+            if len(events) != 0:
+                for i in range(len(events)):
+                    event = events[i]
+                    if event:
+                        self._proc_event(event)
 
            
     def _proc_event(self, event):
         if not event.from_me:
             if event.type == VkEventType.MESSAGE_NEW and event.text:
                 random.seed()
-                database = LiteDB() #maga: почему не при запуске?
+                database = LiteDB() #maga: почему не при запуске? tell: каком блять запуске ? 
                 #---------------------------------------------------------------stop
                 self.is_running = self.player.stop(self.vk, event)
                 #---------------------------------------------------------------stop
