@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "vk_mmo_game", "vk_mmo_game\vk_mmo_game.pyproj", "{09523877-966F-4174-9376-7459D0BDFD4A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2D59AD73-9AC6-49B4-8EED-95767CF0FD20}"
-	ProjectSection(SolutionItems) = preProject
-		vk_mmo_game\str_const.py = vk_mmo_game\str_const.py
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
