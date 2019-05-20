@@ -28,8 +28,12 @@ class PlayerManager():
     def check_quest(self, vk, database):
         print(datetime.datetime.now().strftime("%H:%M:%S"))
         for i in self.players_on_quests:
-            if datetime.datetime.now() > self.players_on_quests[i]:
+            #print(i)
+            k = self.players_on_quests[i] - datetime.datetime.now()
+            print(k.days)
+            if k.days < 0:
                 id = self.players_on_quests.pop(datetime.datetime.now(), None)
+                print(id)
                 if id != None:
                     database.set(db_names.exp, db_names.exp + str_const.plus, id)
                     database.set(db_names.lvl, database.checklvl(database.select(db_names.exp, db_names.id, id)[0][0], id), id)

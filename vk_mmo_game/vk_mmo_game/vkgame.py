@@ -15,7 +15,6 @@ __version__="0.0.1a"
 class Game():
     def __init__(self):
         logger.logger()
-        logger.log('Иницаиализация...')
         str_const.set_fracs_list()
         vk_session = vk_api.VkApi(token = vk_token.token)
         try:
@@ -28,7 +27,6 @@ class Game():
         #self.counter = 0
         self.player = PlayerManager()
         self.database = LiteDB() 
-        logger.log('Иницаиализация завершена')
 
     def process(self):
         while self.is_running:
