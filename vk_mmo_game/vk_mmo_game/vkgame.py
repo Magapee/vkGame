@@ -26,9 +26,11 @@ class Game():
         self.is_running = True
         #self.counter = 0
         self.player = PlayerManager()
+        self.database = LiteDB() 
 
     def process(self):
         while self.is_running:
+            self.player.check_quest(self.vk, self.database)
             events = self.longpoll.check()
             if len(events) != 0:
                 for i in range(len(events)):
@@ -41,8 +43,7 @@ class Game():
         if not event.from_me:
             if event.type == VkEventType.MESSAGE_NEW and event.text:
                 random.seed()
-                database = LiteDB() #maga: почему не при запуске? tell: каком блять запуске ? 
                 #---------------------------------------------------------------stop
                 self.is_running = self.player.stop(self.vk, event)
                 #---------------------------------------------------------------stop
-                self.player.event_handling(self.vk, event, database) 
+                self.player.event_handling(self.vk, event, self.database) 

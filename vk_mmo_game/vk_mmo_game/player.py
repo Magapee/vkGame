@@ -1,5 +1,4 @@
 import logger
-import random
 import keyboard
 import getheromessage
 import const
@@ -12,18 +11,30 @@ from litedb import LiteDB
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 import random
+import datetime
 
 
 class PlayerManager():
     def __init__(self):
         self.count = 0
         self.duel_links = { }
+        self.players_on_quests = { }
 
-    def quest(self, vk, event, database):#Квест, надо допилить
-        database.set(db_names.exp, db_names.exp + str_const.plus, event.user_id)
+    def quest(self, vk, event, database):#Квест
         logger.log("quest", event.user_id)
-        database.set(db_names.lvl, database.checklvl(database.select(db_names.exp, db_names.id, event.user_id)[0][0], event.user_id), event.user_id)
+        self.players_on_quests[event.user_id] = datetime.datetime.now() + datetime.timedelta(seconds = 10)
         vk.messages.send(user_id=event.user_id, message=messages.ok, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
+
+    def check_quest(self, vk, database):
+        print(datetime.datetime.now().strftime("%H:%M:%S"))
+        for i in self.players_on_quests:
+            if datetime.datetime.now() > self.players_on_quests[i]:
+                id = self.players_on_quests.pop(datetime.datetime.now(), None)
+                if id != None:
+                    database.set(db_names.exp, db_names.exp + str_const.plus, id)
+                    database.set(db_names.lvl, database.checklvl(database.select(db_names.exp, db_names.id, id)[0][0], id), id)
+                    vk.messages.send(user_id=id, message="Квест окончен", random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
+
 
     def hero(self, vk, event, database):#Вызов профиля
         logger.log("hero", event.user_id)
@@ -51,9 +62,9 @@ class PlayerManager():
             if event.text in str_const.fracs1:
                 database.set(db_names.countryid, str_const.fracs1[event.text], event.user_id)
                 vk.messages.send(user_id=event.user_id, message=messages.you_faction + event.text, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
+                logger.log("registration", event.user_id)
             else:
-                vk.messages.send(user_id=event.user_id, message=messages.select_frac, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
-            logger.log("registration", event.user_id)
+                vk.messages.send(user_id=event.user_id, message=messages.select_frac, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(1, event.user_id))
 
     def is_registered(self, user_id, database):#Проверка, зарегистрирован ли пользователь
         cur = database.select(db_names.countryid, db_names.id, user_id)
@@ -72,7 +83,7 @@ class PlayerManager():
         vk.messages.send(user_id=event.user_id, message=link, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
     
     def check_battle_link(self, vk, event, database): #дуэль по ссылке
-        id = self.duel_links.pop(event.text)
+        id = self.duel_links.pop(event.text, None)
         if id != None:
             if id != event.user_id:
                 cube = random.randrange(0, 2, 1)

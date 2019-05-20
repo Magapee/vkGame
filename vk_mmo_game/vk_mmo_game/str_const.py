@@ -14,7 +14,7 @@ gold_str = gold_emoji + gold + ":"
 guild_name = "[Имя гильдии]"
 
 fracs_quantity = 3
-fracs0 = {1:'Сумрачный замок', 2:'Мятный замок', 3:'Пидорский замок'}
+fracs0 = {1:"Сумрачный замок", 2:"Мятный замок", 3:"Пидорский замок"}
 fracs1 = { }
 
 class db_names():
@@ -45,5 +45,5 @@ class messages():
 plus = " + 1"
 
 def set_fracs_list():
-    for i in range(1, fracs_quantity):
-        fracs1[i] = fracs0[i]
+    for i in range(1, fracs_quantity + 1):
+        fracs1[fracs0[i]] = i
