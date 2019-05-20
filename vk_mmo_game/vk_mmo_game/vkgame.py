@@ -22,7 +22,7 @@ class Game():
         except vk_api.AuthError as error_msg:
             logger.log(error_msg)
         self.vk = vk_session.get_api()
-        self.longpoll = VkLongPoll(vk_session)
+        self.longpoll = VkLongPoll(vk_session, wait = 1)
         self.is_running = True
         #self.counter = 0
         self.player = PlayerManager()
