@@ -13,6 +13,9 @@ class db_fields():
     battlelink = 5 #temp
     winscounter = 6
 
+wait = 10
+
+
 begin_country = '0'
 begin_gold = '0'
 beging_exp = '0'
