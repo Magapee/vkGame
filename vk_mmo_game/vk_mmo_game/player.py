@@ -26,18 +26,17 @@ class PlayerManager():
         vk.messages.send(user_id=event.user_id, message=messages.ok, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
 
     def check_quest(self, vk, database):
-        print(datetime.datetime.now().strftime("%H:%M:%S"))
-        for i in self.players_on_quests:
-            #print(i)
-            k = self.players_on_quests[i] - datetime.datetime.now()
-            print(k.days)
-            if k.days < 0:
-                id = self.players_on_quests.pop(datetime.datetime.now(), None)
-                print(id)
-                if id != None:
+        #print(datetime.datetime.now().strftime("%H:%M:%S"))
+        self.players_on_quests_b = self.players_on_quests.copy()
+        for id in self.players_on_quests:
+            if id != None:
+                time = self.players_on_quests_b.get(id, None) - datetime.datetime.now()
+                if time.days < 0:
+                    self.players_on_quests_b.pop(id, None)
                     database.set(db_names.exp, db_names.exp + str_const.plus, id)
                     database.set(db_names.lvl, database.checklvl(database.select(db_names.exp, db_names.id, id)[0][0], id), id)
                     vk.messages.send(user_id=id, message="Квест окончен", random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
+        self.players_on_quests = self.players_on_quests_b.copy()
 
 
     def hero(self, vk, event, database):#Вызов профиля

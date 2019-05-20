@@ -2,7 +2,9 @@
 admins = 1, 385124486
 db_name = "Users.db"
 
-normal_condition = '1'
+class condition():
+    normal = '1'
+    forest = '2'
 
 class db_fields():
     id = 0
@@ -21,4 +23,4 @@ begin_gold = '0'
 beging_exp = '0'
 begin_lvl = '1'
 begin_win = '0'
-begin_condition = normal_condition
+begin_condition = condition.normal
