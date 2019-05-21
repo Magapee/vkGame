@@ -27,3 +27,4 @@ begin_state = condition.normal
 begin_atk = '0'
 begin_health = '1'
 begin_condition = condition.normal
+begin_quest_end = 'NULL'
