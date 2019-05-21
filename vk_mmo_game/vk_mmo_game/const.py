@@ -6,7 +6,7 @@ class state():
     normal = '1'
     forest = '2'
 
-class db_fields():
+class players_fields():
     id = 0
     gold = 1
     exp = 2
@@ -14,6 +14,11 @@ class db_fields():
     countryId = 4
     battlelink = 5 #temp
     winscounter = 6
+
+
+class lvls_fields():
+    lvl = 0
+    exp = 1
 
 wait = 10
 
