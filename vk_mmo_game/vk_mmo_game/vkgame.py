@@ -16,12 +16,10 @@ __version__="0.0.1a"
 class Game():
     def __init__(self):
         logger.logger()
+        logger.log("Initialization...")
         str_const.set_fracs_list()
         vk_session = vk_api.VkApi(token = vk_token.token)
-        try:
-            vk_session.auth(token_only=True)
-        except vk_api.AuthError as error_msg:
-            logger.log(error_msg)
+
         self.vk = vk_session.get_api()
         self.longpoll = VkLongPoll(vk_session, wait = const.wait)
         self.is_running = True
@@ -29,6 +27,7 @@ class Game():
         self.player = PlayerManager()
         self.database = LiteDB() 
         self.quest = Quest()
+        logger.log("Initialization complete!")
 
     def process(self):
         while self.is_running:

@@ -3,9 +3,9 @@ import keyboard
 import getheromessage
 import const
 import str_const
-from str_const import db_names
-from str_const import event_calls
-from str_const import messages
+from str_const import DbNames
+from str_const import EventCalls
+from str_const import Messages
 from litedb import LiteDB
 from player_interface import PlayerInterface
 
@@ -21,7 +21,7 @@ class Quest():
     def quest(self, vk, event, database):#Квест
         logger.log("quest", event.user_id)
         self.players_on_quests[event.user_id] = datetime.datetime.now() + datetime.timedelta(seconds = 10)
-        vk.messages.send(user_id=event.user_id, message=messages.ok, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
+        vk.messages.send(user_id=event.user_id, message=Messages.ok, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
 
     def check_quest(self, vk, database):
         #print(datetime.datetime.now().strftime("%H:%M:%S"))

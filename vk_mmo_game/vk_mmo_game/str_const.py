@@ -1,25 +1,30 @@
-class emoji:
+class Emoji:
     gold = "&#128176;"
     fire = "&#128293;"
     lightning = "&#9889;"
-    sword = "&#9876"
-    shield = "&#128737"
-    gun = "&#128299"
-    dagger = "&#128481"
-    bow = "&#371771"
-    heart = "&#10084"
+    sword = "&#9876;"
+    shield = "&#128737;"
+    gun = "&#128299;"
+    dagger = "&#128481;"
+    bow = "&#371771;"
+    heart = "&#10084;"
 
+str_end = ": "
 
-class words:
+class Words:
     lvl = "Уровень"
     exp = "Опыт"
     gold = "Золото"
+    health = "Здоровье"
+    attack = "Атака"
     guild_name = "[Имя гильдии]"
 
-class strs:
-    lvl = emoji.lightning + words.lvl + ":"
-    exp = emoji.fire + words.exp + ":"
-    gold = emoji.gold + words.gold + ":"
+class Strs:
+    lvl = Emoji.lightning + Words.lvl + str_end
+    exp = Emoji.fire + Words.exp + str_end
+    gold = Emoji.gold + Words.gold + str_end
+    health = Emoji.heart + Words.health + str_end
+    attack = Emoji.dagger + Words.attack + str_end
 
 
 
@@ -28,7 +33,7 @@ fracs0 = {1:"Сумрачный замок", 2:"Мятный замок", 3:"П�
 fracs1 = { }
 
 
-class db_names():
+class DbNames():
     id = "id"
     exp = "exp"
     lvl = "lvl"
@@ -37,13 +42,13 @@ class db_names():
     winscounter = "winscounter"
     stop = "Stop"
 
-class event_calls():
+class EventCalls():
     hero = "hero"
     quest = "exp +1"
     stat = "Статистика"
     duel = "Дуэль"
 
-class messages():
+class Messages():
     ok = 'Ok'
     admin_func = 'Функционал для админов'
     select_frac = 'Выберите фракцию'
