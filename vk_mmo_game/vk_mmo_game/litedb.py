@@ -32,7 +32,7 @@ class LiteDB():
         return self.select(field, """id""", user)
     
     def insert_new(self, user_id):
-        message = """INSERT INTO users VALUES ( """ + str(user_id) + """, """ + const.begin_gold + """, """ + const.beging_exp + """, """ + const.begin_lvl +  """, """ + const.begin_country +  """, """ + """NULL""" +  """, """ + const.begin_win + """ )"""
+        message = """INSERT INTO users VALUES ( """ + str(user_id) + """, """ + const.begin_gold + """, """ + const.beging_exp + """, """ + const.begin_lvl +  """, """ + const.begin_country +  """, """  + const.begin_win +  """, """ + const.begin_state +  """, """ + const.begin_atk +  """, """ + const.begin_health +  """, """ + const.begin_quest_end + """ )"""
         self.cursor.execute(message)
         self.conn.commit()
 
