@@ -9,6 +9,7 @@ import logger
 import const
 import vk_token
 import str_const
+from quest import Quest
 
 __version__="0.0.1a"
 
@@ -27,10 +28,11 @@ class Game():
         #self.counter = 0
         self.player = PlayerManager()
         self.database = LiteDB() 
+        self.quest = Quest()
 
     def process(self):
         while self.is_running:
-            self.player.check_quest(self.vk, self.database)
+            self.quest.check_quest(self.vk, self.database)
             events = self.longpoll.check()
             if len(events) != 0:
                 for i in range(len(events)):
@@ -46,4 +48,4 @@ class Game():
                 #---------------------------------------------------------------stop
                 self.is_running = self.player.stop(self.vk, event)
                 #---------------------------------------------------------------stop
-                self.player.event_handling(self.vk, event, self.database) 
+                self.player.event_handling(self.vk, event, self.database, self.quest) 

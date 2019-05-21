@@ -7,6 +7,7 @@ from str_const import db_names
 from str_const import event_calls
 from str_const import messages
 from litedb import LiteDB
+from quest import Quest
 
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
@@ -18,26 +19,6 @@ class PlayerManager():
     def __init__(self):
         self.count = 0
         self.duel_links = { }
-        self.players_on_quests = { }
-
-    def quest(self, vk, event, database):#Квест
-        logger.log("quest", event.user_id)
-        self.players_on_quests[event.user_id] = datetime.datetime.now() + datetime.timedelta(seconds = 10)
-        vk.messages.send(user_id=event.user_id, message=messages.ok, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
-
-    def check_quest(self, vk, database):
-        #print(datetime.datetime.now().strftime("%H:%M:%S"))
-        self.players_on_quests_b = self.players_on_quests.copy()
-        for id in self.players_on_quests:
-            if id != None:
-                time = self.players_on_quests_b.get(id, None) - datetime.datetime.now()
-                if time.days < 0:
-                    self.players_on_quests_b.pop(id, None)
-                    database.set(db_names.exp, db_names.exp + str_const.plus, id)
-                    database.set(db_names.lvl, database.checklvl(database.select(db_names.exp, db_names.id, id)[0][0], id), id)
-                    vk.messages.send(user_id=id, message="Квест окончен", random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
-        self.players_on_quests = self.players_on_quests_b.copy()
-
 
     def hero(self, vk, event, database):#Вызов профиля
         logger.log("hero", event.user_id)
@@ -104,10 +85,10 @@ class PlayerManager():
         vk.messages.send(user_id=event.user_id, message=messages.wins + str(database.select(db_names.winscounter, db_names.id, event.user_id)[0][0]), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
         return True
 
-    def event_handling(self, vk, event, database):
+    def event_handling(self, vk, event, database, quest):
         if self.is_registered(event.user_id, database):
             if event.text == event_calls.quest:
-                self.quest(vk, event, database)
+                quest.quest(vk, event, database)
             elif event.text == event_calls.hero:
                 self.hero(vk, event, database)
             elif event.text == event_calls.stat:
