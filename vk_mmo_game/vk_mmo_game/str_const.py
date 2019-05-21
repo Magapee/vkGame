@@ -1,22 +1,27 @@
 class emoji:
-    gold_emoji = "&#128176;"
-    fire_emoji = "&#128293;"
-    lightning_emoji = "&#9889;"
+    gold = "&#128176;"
+    fire = "&#128293;"
+    lightning = "&#9889;"
+    sword = "&#9876"
+    shield = "&#128737"
+    gun = "&#128299"
+    dagger = "&#128481"
+    bow = "&#371771"
+    heart = "&#10084"
 
 
-lvl = "Уровень"
+class words:
+    lvl = "Уровень"
+    exp = "Опыт"
+    gold = "Золото"
+    guild_name = "[Имя гильдии]"
 
-lvl_str = emoji.lightning_emoji + lvl + ":"
+class strs:
+    lvl = emoji.lightning + words.lvl + ":"
+    exp = emoji.fire + words.exp + ":"
+    gold = emoji.gold + words.gold + ":"
 
-exp = "Опыт"
 
-exp_str = emoji.fire_emoji + exp + ":"
-
-gold = "Золото"
-
-gold_str = emoji.gold_emoji + gold + ":"
-
-guild_name = "[Имя гильдии]"
 
 fracs_quantity = 3
 fracs0 = {1:"Сумрачный замок", 2:"Мятный замок", 3:"Пидорский замок"}

@@ -10,14 +10,19 @@ class LiteDB():
         self.cursor = self.conn.cursor()
 
     def update(self, field, value, where, condition):
-        self.cursor.execute("""UPDATE users SET """ + str(field) + """ = """ + str(value) + """ WHERE """ + str(where) + """ = """ + str(condition))
+        self.cursor.execute("""UPDATE users SET """
+                           + str(field) 
+                           + """ = """ 
+                           + str(value) 
+                           + """ WHERE """ 
+                           + str(where) 
+                           + """ = """ 
+                           + str(condition))
         self.conn.commit()
         return self.cursor.fetchall()
 
     def select(self, field0, field1, value, database = """users"""):
-        self.cursor.execute("""SELECT """ + str(field0) + """ FROM """ + database + """ WHERE """ + str(field1) + """ = """ + str(value))
-        self.conn.commit()
-        return self.cursor.fetchall()
+        return self.select_wcondition(field0, field1, """ = """ + str(value), database)
 
     def select_wcondition(self, field0, field1, condition, database):
         self.cursor.execute("""SELECT """ + str(field0) + """ FROM """ + database + """ WHERE """ + str(field1) + """ """ + str(condition))
