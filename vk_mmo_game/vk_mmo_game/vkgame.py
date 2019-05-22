@@ -32,9 +32,9 @@ class Game():
     def process(self):
         while self.is_running:
             self.quest.check_quest(self.vk, self.database)
-            logger.log("Begin check")
+            #logger.log("Begin check")
             events = self.longpoll.check()
-            logger.log("End check")
+            #logger.log("End check")
             if len(events) != 0:
                 for i in range(len(events)):
                     event = events[i]
