@@ -1,11 +1,12 @@
 import logger
 import keyboard
-import getheromessage
+import mes_constructors
 import const
 import str_const
 from str_const import DbNames
 from str_const import EventCalls
 from str_const import Messages
+from str_const import NameCase
 from litedb import LiteDB
 from quest import Quest
 
@@ -22,7 +23,7 @@ class PlayerManager():
 
     def hero(self, vk, event, database):#Вызов профиля
         logger.log("hero", event.user_id)
-        vk.messages.send(user_id=event.user_id, message=getheromessage.get_message(event.user_id, database), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
+        vk.messages.send(user_id=event.user_id, message=mes_constructors.hero_message(event.user_id, database), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
         return True
 
     def stop(self, vk, event):#Остановка бота, тестовый функционал
@@ -71,13 +72,15 @@ class PlayerManager():
         if id != None:
             if id != event.user_id:
                 cube = random.randrange(0, 2, 1)
-                cube1 = {-1 : Messages.win, 0 : Messages.lose, 1 : Messages.win}
-                if cube == 1:
+                messages = {False : Messages.lose, True : Messages.win}
+
+                if cube:
                     database.set(DbNames.winscounter, DbNames.winscounter + str_const.plus, event.user_id)
-                if cube == 0:
+                else:
                     database.set(DbNames.winscounter, DbNames.winscounter + str_const.plus, id)
-                vk.messages.send(user_id=event.user_id, message=cube1[cube], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
-                vk.messages.send(user_id=id, message=cube1[cube - 1], random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
+
+                vk.messages.send(user_id = event.user_id, message = mes_constructors.duel_message(cube, id, event.text, vk), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
+                vk.messages.send(user_id = id, message = mes_constructors.duel_message(not cube, event.user_id, event.text, vk), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
             else:
                 vk.messages.send(user_id=event.user_id, message=Messages.fight_yourself, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
 

@@ -22,7 +22,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="const.py" />
-    <Compile Include="getheromessage.py" />
+    <Compile Include="mes_constructors.py" />
     <Compile Include="keyboard.py" />
     <Compile Include="logger.py" />
     <Compile Include="player_interface.py">

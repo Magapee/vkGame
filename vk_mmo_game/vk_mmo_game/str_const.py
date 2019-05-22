@@ -10,6 +10,7 @@ class Emoji:
     heart = "&#10084;"
 
 str_end = ": "
+quote = '"'
 
 class Words:
     lvl = "Уровень"
@@ -25,6 +26,16 @@ class Strs:
     gold = Emoji.gold + Words.gold + str_end
     health = Emoji.heart + Words.health + str_end
     attack = Emoji.dagger + Words.attack + str_end
+
+
+class NameCase: #падежи
+    nom = "nom" #именительный
+    gen = "gen" #родительный
+    dat = "dat" #дательный
+    acc = "acc" #винительный
+    ins = "ins" #творительный
+    abl = "abl" #предложный
+
 
 
 
@@ -56,7 +67,9 @@ class Messages():
     win = "Победа"
     lose = "Поражение"
     fight_yourself = "Нельзя драться с собой"
-    wins = "Побед:"
+    wins = "Побед: "
+    in_duel_with = "в сражении с"
+    with_link = "по"
 
 plus = " + 1"
 

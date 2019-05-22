@@ -1,5 +1,5 @@
 
-admins = 1, 385124486
+admins = 1, 385124486, 308831692
 db_name = "Users.db"
 
 class State():
@@ -24,7 +24,7 @@ class LvlsFields():
     lvl = 0
     exp = 1
 
-wait = 10
+wait = 3
 
 
 
