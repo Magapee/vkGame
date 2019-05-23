@@ -1,17 +1,22 @@
 import str_const
-from str_const import Strs, NameCase, Messages
-from const import PlayersFields
+from str_const import Strs, NameCase, Messages, Words
+from const import PlayersFields, States
 from litedb import LiteDB
+import time
 
 def hero_message(user_id, database):
     info = database.select("""*""", """id""", user_id)
+    if info[0][PlayersFields.state] != int(States.normal):
+        status = str(str_const.states[info[0][PlayersFields.state]] + str(int(info[0][PlayersFields.quest_end] - time.time())) + Words.seconds)
+    else:
+        status = str(str_const.states[info[0][PlayersFields.state]])
     return (str_const.fracs0[info[0][PlayersFields.countryId]] + " " + str_const.Words.guild_name + "\n" +
-    Strs.lvl + str(info[0][PlayersFields.lvl]) + "\n" +
-    Strs.exp + str(info[0][PlayersFields.exp]) + "\n" +
-    Strs.gold + str(info[0][PlayersFields.gold]) + "\n" +
-    Strs.health + str(info[0][PlayersFields.health]) + "\n" +
-    Strs.attack + str(info[0][PlayersFields.attack])
-    )
+        Strs.lvl + str(info[0][PlayersFields.lvl]) + "\n" +
+        Strs.exp + str(info[0][PlayersFields.exp]) + "\n" +
+        Strs.gold + str(info[0][PlayersFields.gold]) + "\n" +
+        Strs.health + str(info[0][PlayersFields.health]) + "\n" +
+        Strs.attack + str(info[0][PlayersFields.attack])+ "\n" +
+        Strs.status + status)
 
 
 def link_name(user_id, vk_api, name_case = NameCase.nom):

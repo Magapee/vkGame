@@ -2,9 +2,9 @@
 admins = 1, 385124486, 308831692
 db_name = "Users.db"
 
-class State():
+class States():
     normal = '1'
-    forest = '2'
+    quest = '2'
 
 class PlayersFields():
     id = 0
@@ -17,7 +17,6 @@ class PlayersFields():
     attack = 7
     health = 8
     quest_end = 9
-
 
 
 class LvlsFields():
@@ -36,5 +35,5 @@ class Begin():
     win = '0'
     attack = '1'
     health = '10'
-    state = State.normal
+    state = States.normal
     quest_end = 'NULL'

@@ -27,7 +27,7 @@ def getKey(number, user_id):
             keyboard = {
                 "one_time": False,
                 "buttons": [
-                [get_button(label="hero", color="positive"), get_button(label="exp +1", color="positive")],
+                [get_button(label="hero", color="positive"), get_button(label="quest", color="positive")],
                 [get_button(label="Дуэль", color="positive"), get_button(label="Статистика", color="positive")],
                 [get_button(label="Stop", color="negative")]
                 ]
@@ -46,7 +46,7 @@ def getKey(number, user_id):
             keyboard = {
                 "one_time": False,
                 "buttons": [
-                [get_button(label="hero", color="positive"), get_button(label="exp +1", color="positive")],
+                [get_button(label="hero", color="positive"), get_button(label="quest", color="positive")],
                 [get_button(label="Дуэль", color="positive"), get_button(label="Статистика", color="positive")],
                 ]
             }

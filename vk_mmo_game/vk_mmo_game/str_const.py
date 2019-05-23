@@ -19,6 +19,8 @@ class Words:
     health = "Здоровье"
     attack = "Атака"
     guild_name = "[Имя гильдии]"
+    status = "Состояние"
+    seconds = " секунд"
 
 class Strs:
     lvl = Emoji.lightning + Words.lvl + str_end
@@ -26,6 +28,7 @@ class Strs:
     gold = Emoji.gold + Words.gold + str_end
     health = Emoji.heart + Words.health + str_end
     attack = Emoji.dagger + Words.attack + str_end
+    status = Words.status + str_end
 
 
 class NameCase: #падежи
@@ -42,7 +45,7 @@ class NameCase: #падежи
 fracs_quantity = 3
 fracs0 = {1:"Сумрачный замок", 2:"Мятный замок", 3:"Пидорский замок"}
 fracs1 = { }
-
+states = {1:'Отдых', 2:'В поисках пиздюлей, осталось:'}
 
 class DbNames():
     id = "id"
@@ -52,10 +55,14 @@ class DbNames():
     quest = "exp +1"
     winscounter = "winscounter"
     stop = "Stop"
+    state = "state"
+    quest_end = "quest_end"
+    health = "health"
+    attack = "attack"
 
 class EventCalls():
     hero = "hero"
-    quest = "exp +1"
+    quest = "quest"
     stat = "Статистика"
     duel = "Дуэль"
 
@@ -70,6 +77,9 @@ class Messages():
     wins = "Побед: "
     in_duel_with = "в сражении с"
     with_link = "по"
+    quest = "Ты отправился искать приключения на свою жопу. Нахуя ? не понятно! Это займет "
+    seconds = " секунд"
+    quest_stop = "Поход нахуй окончен, ты получил exp: "
 
 plus = " + 1"
 
