@@ -25,7 +25,7 @@ class LvlsFields():
 
 wait = 3
 
-
+top_range = 3
 
 class Begin():
     country = '0'

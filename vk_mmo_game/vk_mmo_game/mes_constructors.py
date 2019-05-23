@@ -1,8 +1,10 @@
 import str_const
 from str_const import Strs, NameCase, Messages, Words, DbNames
+import const
 from const import PlayersFields, States
 from litedb import LiteDB
 import time
+import logger
 
 def hero_message(user_id, database):
     info = database.select("""*""", """id""", user_id)
@@ -20,24 +22,24 @@ def hero_message(user_id, database):
 
 
 def link_name(user_id, vk_api, name_case = NameCase.nom):
-    user = vk_api.users.get(user_ids = [user_id], name_case = name_case)[0]
-    return ("[id"
-           + str(user_id)
-           + "|" 
-           + user["first_name"] 
-           + " " 
-           + user["last_name"] 
-           + "]"
-           )
+    users = vk_api.users.get(user_ids = user_id, name_case = name_case)
+    links = []
+    for i in users:
+        links.append("[id" + str(i['id']) + "|" + i["first_name"] + " " + i["last_name"] + "]")
+    return (links)
            
 def duel_top(database, vk_api):
     top = database.select_order(DbNames.id + " , " + DbNames.winscounter, DbNames.winscounter)
+    ids = str(top[0][0]) 
+    for i in range(1, const.top_range):
+        ids = ids + "," +  str(top[i][0])
+    links = link_name(ids, vk_api)
     top_mes = ""
-    for i in range(0, 10):
+    for i in range(0, const.top_range):
         if i < 3:
-            top_mes = top_mes + str_const.Emoji.Medals[i + 1] + "#" + str(i + 1) + " " + str(link_name(top[i][0], vk_api)) + ": " + str(top[i][1]) + "\n"
+            top_mes = top_mes + str_const.Emoji.Medals[i + 1] + "#" + str(i + 1) + " " + str(links[i]) + ": " + str(top[i][1]) + "\n"
         else:
-            top_mes = top_mes + "#" + str(i + 1) + " " + str(link_name(top[i][0], vk_api)) + ": " + str(top[i][1]) + "\n"
+            top_mes = top_mes + "#" + str(i + 1) + " " + str(links[i]) + ": " + str(top[i][1]) + "\n"
     return(top_mes)
 
 def duel_message(is_win, opp_id, duel_link, vk_api):
@@ -45,4 +47,4 @@ def duel_message(is_win, opp_id, duel_link, vk_api):
         win_str = Messages.win
     else:
         win_str = Messages.lose
-    return win_str + ' ' + Messages.in_duel_with + ' ' + link_name(opp_id, vk_api, NameCase.ins) + ' ' + Messages.with_link + ' ' + duel_link
+    return win_str + ' ' + Messages.in_duel_with + ' ' + link_name(opp_id, vk_api, NameCase.ins)[0] + ' ' + Messages.with_link + ' ' + duel_link

@@ -73,7 +73,7 @@ class PlayerManager():
             if id != event.user_id:
                 cube = random.randrange(0, 2, 1)
                 messages = {False : Messages.lose, True : Messages.win}
-
+                
                 if cube:
                     database.set(DbNames.winscounter, DbNames.winscounter + str_const.plus, event.user_id)
                 else:
@@ -97,14 +97,14 @@ class PlayerManager():
         if self.is_registered(event.user_id, database):
             if event.text == EventCalls.quest:
                 quest.quest(vk, event, database)
+            elif event.text == EventCalls.duel_top:
+                self.duel_top(database, event.user_id, vk)
             elif event.text == EventCalls.hero:
                 self.hero(vk, event, database)
             elif event.text == EventCalls.stat:
                 self.get_battle_stats(vk, event, database)
             elif  event.text == EventCalls.duel:
                 self.get_battle_link(vk, event, database)
-            elif event.text == EventCalls.duel_top:
-                self.duel_top(database, event.user_id, vk)
             else:
                 self.check_battle_link(vk, event, database)
         else:
