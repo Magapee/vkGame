@@ -85,10 +85,12 @@ class PlayerManager():
                 vk.messages.send(user_id=event.user_id, message=Messages.fight_yourself, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
 
     def get_battle_stats(self, vk, event, database):
+        logger.log("get battle stats", event.user_id)
         vk.messages.send(user_id=event.user_id, message=Messages.wins + str(database.select(DbNames.winscounter, DbNames.id, event.user_id)[0][0]), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
         return True
 
     def duel_top(self, database, id, vk):
+        logger.log("duel top", id)
         vk.messages.send(user_id=id, message=mes_constructors.duel_top(database, vk), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
 
     def event_handling(self, vk, event, database, quest):
