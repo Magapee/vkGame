@@ -35,6 +35,7 @@ class Quest():
                 timenow = float(users[1])
                 if time.time() > timenow:
                     database.set(DbNames.state, States.normal, id)
+                    database.set(DbNames.quest_end,  "NULL", id)
                     cube = random.randrange(0, 4, 1)
                     vk.messages.send(user_id=id, message=Messages.quest_stop + str(cube), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
                     PlayerInterface.add_exp(cube, id, database)
