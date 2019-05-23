@@ -65,6 +65,7 @@ class EventCalls():
     quest = "quest"
     stat = "Статистика"
     duel = "Дуэль"
+    duel_top = "Топ"
 
 class Messages():
     ok = 'Ok'

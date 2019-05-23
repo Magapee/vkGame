@@ -88,6 +88,9 @@ class PlayerManager():
         vk.messages.send(user_id=event.user_id, message=Messages.wins + str(database.select(DbNames.winscounter, DbNames.id, event.user_id)[0][0]), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
         return True
 
+    def duel_top(self, database, id, vk):
+        vk.messages.send(user_id=id, message=mes_constructors.duel_top(database, vk), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
+
     def event_handling(self, vk, event, database, quest):
         if self.is_registered(event.user_id, database):
             if event.text == EventCalls.quest:
@@ -98,6 +101,8 @@ class PlayerManager():
                 self.get_battle_stats(vk, event, database)
             elif  event.text == EventCalls.duel:
                 self.get_battle_link(vk, event, database)
+            elif event.text == EventCalls.duel_top:
+                self.duel_top(database, event.user_id, vk)
             else:
                 self.check_battle_link(vk, event, database)
         else:

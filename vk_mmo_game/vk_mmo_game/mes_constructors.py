@@ -1,5 +1,5 @@
 import str_const
-from str_const import Strs, NameCase, Messages, Words
+from str_const import Strs, NameCase, Messages, Words, DbNames
 from const import PlayersFields, States
 from litedb import LiteDB
 import time
@@ -29,7 +29,13 @@ def link_name(user_id, vk_api, name_case = NameCase.nom):
            + user["last_name"] 
            + "]"
            )
-
+           
+def duel_top(database, vk_api):
+    top = database.select_order(DbNames.id + " , " + DbNames.winscounter, DbNames.winscounter)
+    top_mes = ""
+    for i in range(0, 10):
+        top_mes = top_mes + "#" + str(i + 1) + " " + str(link_name(top[i][0], vk_api)) + " :" + str(top[i][1]) + "\n"
+    return(top_mes)
 
 def duel_message(is_win, opp_id, duel_link, vk_api):
     if is_win:

@@ -29,6 +29,11 @@ class LiteDB():
         self.cursor.execute("""SELECT """ + str(field0) + """ FROM """ + database + """ WHERE """ + str(field1) + """ """ + str(condition))
         self.conn.commit()
         return self.cursor.fetchall()
+    
+    def select_order(self, field, order, database = """users"""):
+        self.cursor.execute("""SELECT """ + str(field) + """ FROM """ + database + """ ORDER BY """ + order + " DESC")
+        self.conn.commit()
+        return self.cursor.fetchall()
 
     def set(self, field, value, user_id):
         self.update(field, value, """id""", user_id)

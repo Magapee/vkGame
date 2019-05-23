@@ -28,7 +28,7 @@ def getKey(number, user_id):
                 "one_time": False,
                 "buttons": [
                 [get_button(label="hero", color="positive"), get_button(label="quest", color="positive")],
-                [get_button(label="Дуэль", color="positive"), get_button(label="Статистика", color="positive")],
+                [get_button(label="Дуэль", color="positive"), get_button(label="Статистика", color="positive")], [get_button(label="Топ", color="positive")],
                 [get_button(label="Stop", color="negative")]
                 ]
             }
@@ -47,7 +47,7 @@ def getKey(number, user_id):
                 "one_time": False,
                 "buttons": [
                 [get_button(label="hero", color="positive"), get_button(label="quest", color="positive")],
-                [get_button(label="Дуэль", color="positive"), get_button(label="Статистика", color="positive")],
+                [get_button(label="Дуэль", color="positive"), get_button(label="Статистика", color="positive")], [get_button(label="Топ", color="positive")]
                 ]
             }
     keyboard = json.dumps(keyboard, ensure_ascii=False).encode('utf-8')
