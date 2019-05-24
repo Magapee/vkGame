@@ -35,6 +35,11 @@ class LiteDB():
         self.conn.commit()
         return self.cursor.fetchall()
 
+    def select_all_ids(self):
+        self.cursor.execute("""SELECT id FROM users""")
+        self.conn.commit()
+        return self.cursor.fetchall()
+
     def set(self, field, value, user_id):
         self.update(field, value, """id""", user_id)
         return self.cursor.fetchall()

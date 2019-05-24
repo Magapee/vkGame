@@ -21,6 +21,17 @@ class PlayerManager():
         self.count = 0
         self.duel_links = { }
 
+    def get_links(self, links_to_players, links_to_players_ins, database, vk_api):
+        players = database.select_all_ids()
+        ids = str(players[0][0])
+        for i in range(1, len(players)):
+            ids += "," + str(players[i][0])
+        links = mes_constructors.link_name(ids, vk_api)
+        links_ins = mes_constructors.link_name(ids, vk_api, NameCase.ins)
+        for i in range(len(players)):
+            links_to_players[players[i][0]] = links[i]
+            links_to_players_ins[players[i][0]] = links_ins[i]
+
     def hero(self, vk, event, database):#Вызов профиля
         logger.log("hero", event.user_id)
         vk.messages.send(user_id=event.user_id, message=mes_constructors.hero_message(event.user_id, database), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
@@ -67,7 +78,7 @@ class PlayerManager():
         self.duel_links[link] = event.user_id
         vk.messages.send(user_id=event.user_id, message=link, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
     
-    def check_battle_link(self, vk, event, database): #дуэль по ссылке
+    def check_battle_link(self, vk, event, database, links_to_players_ins): #дуэль по ссылке
         id = self.duel_links.pop(event.text, None)
         if id != None:
             if id != event.user_id:
@@ -79,8 +90,8 @@ class PlayerManager():
                 else:
                     database.set(DbNames.winscounter, DbNames.winscounter + str_const.plus, id)
 
-                vk.messages.send(user_id = event.user_id, message = mes_constructors.duel_message(cube, id, event.text, vk), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
-                vk.messages.send(user_id = id, message = mes_constructors.duel_message(not cube, event.user_id, event.text, vk), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
+                vk.messages.send(user_id = event.user_id, message = mes_constructors.duel_message(cube, id, event.text, vk, links_to_players_ins), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
+                vk.messages.send(user_id = id, message = mes_constructors.duel_message(not cube, event.user_id, event.text, vk, links_to_players_ins), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
             else:
                 vk.messages.send(user_id=event.user_id, message=Messages.fight_yourself, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
 
@@ -89,16 +100,16 @@ class PlayerManager():
         vk.messages.send(user_id=event.user_id, message=Messages.wins + str(database.select(DbNames.winscounter, DbNames.id, event.user_id)[0][0]), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
         return True
 
-    def duel_top(self, database, id, vk):
+    def duel_top(self, database, id, vk, links_to_players):
         logger.log("duel top", id)
-        vk.messages.send(user_id=id, message=mes_constructors.duel_top(database, vk), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
+        vk.messages.send(user_id=id, message=mes_constructors.duel_top(database, vk, links_to_players), random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
 
-    def event_handling(self, vk, event, database, quest):
+    def event_handling(self, vk, event, database, quest, links_to_players, links_to_players_ins):
         if self.is_registered(event.user_id, database):
             if event.text == EventCalls.quest:
                 quest.quest(vk, event, database)
             elif event.text == EventCalls.duel_top:
-                self.duel_top(database, event.user_id, vk)
+                self.duel_top(database, event.user_id, vk, links_to_players)
             elif event.text == EventCalls.hero:
                 self.hero(vk, event, database)
             elif event.text == EventCalls.stat:
@@ -106,6 +117,6 @@ class PlayerManager():
             elif  event.text == EventCalls.duel:
                 self.get_battle_link(vk, event, database)
             else:
-                self.check_battle_link(vk, event, database)
+                self.check_battle_link(vk, event, database, links_to_players_ins)
         else:
             self.registrate(vk, event, database)

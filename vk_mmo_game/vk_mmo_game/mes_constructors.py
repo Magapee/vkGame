@@ -28,23 +28,22 @@ def link_name(user_id, vk_api, name_case = NameCase.nom):
         links.append("[id" + str(i['id']) + "|" + i["first_name"] + " " + i["last_name"] + "]")
     return (links)
            
-def duel_top(database, vk_api):
+def duel_top(database, vk_api, links_to_players):
     top = database.select_order(DbNames.id + " , " + DbNames.winscounter, DbNames.winscounter)
-    ids = str(top[0][0]) 
-    for i in range(1, const.top_range):
-        ids = ids + "," +  str(top[i][0])
-    links = link_name(ids, vk_api)
+    ids = []
+    for i in range(0, const.top_range):
+        ids.append(top[i][0])
     top_mes = ""
     for i in range(0, const.top_range):
         if i < 3:
-            top_mes = top_mes + str_const.Emoji.Medals[i + 1] + "#" + str(i + 1) + " " + str(links[i]) + ": " + str(top[i][1]) + "\n"
+            top_mes = top_mes + str_const.Emoji.Medals[i + 1] + "№" + str(i + 1) + " " + str(links_to_players[ids[i]]) + ": " + str(top[i][1]) + "\n"
         else:
-            top_mes = top_mes + "#" + str(i + 1) + " " + str(links[i]) + ": " + str(top[i][1]) + "\n"
+            top_mes = top_mes + "№" + str(i + 1) + " " + str(links_to_players[ids[i]]) + ": " + str(top[i][1]) + "\n"
     return(top_mes)
 
-def duel_message(is_win, opp_id, duel_link, vk_api):
+def duel_message(is_win, opp_id, duel_link, vk_api, links_to_players_ins):
     if is_win:
         win_str = Messages.win
     else:
         win_str = Messages.lose
-    return win_str + ' ' + Messages.in_duel_with + ' ' + link_name(opp_id, vk_api, NameCase.ins)[0] + ' ' + Messages.with_link + ' ' + duel_link
+    return win_str + ' ' + Messages.in_duel_with + ' ' + links_to_players_ins[opp_id] + ' ' + Messages.with_link + ' ' + duel_link

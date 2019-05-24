@@ -27,6 +27,9 @@ class Game():
         self.player = PlayerManager()
         self.database = LiteDB() 
         self.quest = Quest()
+        self.links_to_players = { }
+        self.links_to_players_ins = { }
+        self.player.get_links(self.links_to_players, self.links_to_players_ins, self.database, self.vk)
         logger.log("Initialization complete!")
 
     def process(self):
@@ -49,4 +52,4 @@ class Game():
                 #---------------------------------------------------------------stop
                 self.is_running = self.player.stop(self.vk, event)
                 #---------------------------------------------------------------stop
-                self.player.event_handling(self.vk, event, self.database, self.quest) 
+                self.player.event_handling(self.vk, event, self.database, self.quest, self.links_to_players, self.links_to_players_ins)
