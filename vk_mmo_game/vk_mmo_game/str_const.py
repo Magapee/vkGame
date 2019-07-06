@@ -1,4 +1,4 @@
-class Emoji:
+class Emoji: #emoji for vk
     gold = "&#128176;"
     fire = "&#128293;"
     lightning = "&#9889;"
@@ -9,10 +9,10 @@ class Emoji:
     bow = "&#371771;"
     heart = "&#10084;"
 
-str_end = ": "
-quote = '"'
+str_end = ": " #comment!
+quote = '"' #comment!
 
-class Words:
+class Words: #words for messages to players
     lvl = "Уровень"
     exp = "Опыт"
     gold = "Золото"
@@ -20,7 +20,7 @@ class Words:
     attack = "Атака"
     guild_name = "[Имя гильдии]"
 
-class Strs:
+class Strs: #building strings for messages to players
     lvl = Emoji.lightning + Words.lvl + str_end
     exp = Emoji.fire + Words.exp + str_end
     gold = Emoji.gold + Words.gold + str_end
@@ -28,7 +28,7 @@ class Strs:
     attack = Emoji.dagger + Words.attack + str_end
 
 
-class NameCase: #падежи
+class NameCase: #падежи для вк (cases, for vk only for now)
     nom = "nom" #именительный
     gen = "gen" #родительный
     dat = "dat" #дательный
@@ -40,11 +40,11 @@ class NameCase: #падежи
 
 
 fracs_quantity = 3
-fracs0 = {1:"Сумрачный замок", 2:"Мятный замок", 3:"Пидорский замок"}
+fracs0 = {1:"Сумрачный замок", 2:"Мятный замок", 3:"Пидорский замок"} #needed to change name + comments
 fracs1 = { }
 
 
-class DbNames():
+class DbNames(): #columns of players table
     id = "id"
     exp = "exp"
     lvl = "lvl"
@@ -53,14 +53,14 @@ class DbNames():
     winscounter = "winscounter"
     stop = "Stop"
 
-class EventCalls():
-    hero = "hero"
+class Buttons():
+    stats = "hero"
     quest = "exp +1"
-    stat = "Статистика"
+    top = "Статистика"
     duel = "Дуэль"
 
 class Messages():
-    ok = 'Ok'
+    ok = 'Ok' #need comments here!!!
     admin_func = 'Функционал для админов'
     select_frac = 'Выберите фракцию'
     you_faction = "Вами выбрана фракция: "

@@ -25,7 +25,7 @@ class Game():
         self.is_running = True
         #self.counter = 0
         self.player = PlayerManager()
-        self.database = LiteDB() 
+        self.database = LiteDB()
         self.quest = Quest()
         logger.log("Initialization complete!")
 
@@ -36,7 +36,7 @@ class Game():
             events = self.longpoll.check()
             #logger.log("End check")
             if len(events) != 0:
-                for i in range(len(events)):
+                for i in range(len(events)): #TODO: solve useless "if"
                     event = events[i]
                     if event:
                         self._proc_event(event)

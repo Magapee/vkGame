@@ -3,6 +3,7 @@ admins = 1, 385124486, 308831692
 db_name = "Users.db"
 
 class State():
+    unregistered = '0'
     normal = '1'
     forest = '2'
 

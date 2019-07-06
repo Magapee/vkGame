@@ -4,7 +4,7 @@ import mes_constructors
 import const
 import str_const
 from str_const import DbNames
-from str_const import EventCalls
+from str_const import Buttons
 from str_const import Messages
 from litedb import LiteDB
 from player_interface import PlayerInterface
