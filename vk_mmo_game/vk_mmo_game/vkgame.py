@@ -11,11 +11,11 @@ import vk_token
 import str_const
 from quest import Quest
 
-__version__="0.0.1a"
+__version__="0.1.0a" #object update
 
 class Game():
     def __init__(self):
-        logger.logger()
+        logger.logger() #I've fuck that shit
         logger.log("Initialization...")
         str_const.set_fracs_list()
         vk_session = vk_api.VkApi(token = vk_token.token)
@@ -25,7 +25,7 @@ class Game():
         self.is_running = True
         #self.counter = 0
         self.player = PlayerManager()
-        self.database = LiteDB()
+        self.database = LiteDB(const.db_name)
         self.quest = Quest()
         logger.log("Initialization complete!")
 

@@ -9,6 +9,13 @@ class Player(object):
                  gold = int(Begin.gold), health = int(Begin.health),
                  attack = int(Begin.attack), winscounter = int(Begin.win),
                  state = State.unregistered, countryid = int(Begin.country)):
+
+        #requred args
+        self.id = id #id of player, for vk = vk id
+        self.lock = lock #multiprossesing.Lock
+        self.database = database #database for players
+
+        #unrequred args
         self.lvl = lvl
         self.exp = exp
         self.gold = gold
@@ -17,9 +24,35 @@ class Player(object):
         self.state = state
         self.countryid = countryid
 
-        self.id = id #id of player, for vk = vk id
-        self.lock = lock #multiprossesing.Lock
-        self.database = database #database for players
+    #orm
+
+    def push(self): #not sure, if needed
+        raise NotImplementedError
+
+    def pull(self): #not sure, if needed
+        raise NotImplementedError
+
+    def synchronize(self): #oRm method, to synchronize object with DB uses pull and push
+        raise NotImplementedError
+
+    #player interfaces, used by prosess
+
+    def show_stats(self): 
+        raise NotImplementedError
+
+    def go_to_quest(self):
+        raise NotImplementedError
+
+    def show_top(self):
+        raise NotImplementedError
+
+    def generate_dlink(self):
+        raise NotImplementedError
+
+    def std_ans(self):
+        raise NotImplementedError
+
+    #programm interfaces
 
     def prosess(self, message):
         if message == Buttons.stats:
@@ -31,35 +64,12 @@ class Player(object):
         elif message == Buttons.duel:
             generate_dlink(self)
         else:
-            pass
-
-    
-    def push(self): #not sure, if needed
-        raise NotImplemented
-
-    def get(self):
-        raise NotImplemented
-
-    def synchronize(self): #oRm method, to synchronize object with DB
-        raise NotImplemented
-
-    def show_stats(self):
-        raise NotImplemented
-
-    def go_to_quest(self):
-        raise NotImplemented
-
-    def show_top(self):
-        raise NotImplemented
+            std_ans()
 
     def add_exp(self, exp):
-        raise NotImplemented
+        raise NotImplementedError
+
+    #private metods
 
     def _level_up(self):
-        raise NotImplemented
-
-    def generate_dlink(self):
-        raise NotImplemented
-
-    def std_ans(self):
-        raise NotImplemented
+        raise NotImplementedError
