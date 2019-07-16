@@ -4,6 +4,13 @@ from str_const import Buttons
 
 
 class Player(object):
+
+    answers = {
+                Buttons.stats : show_stats(),
+                Buttons.quest : go_to_quest(),
+                Buttons.top : show_top(),
+                Buttons.duel : generate_dlink()}
+
     def __init__(self, id, lock, database, #required params
                  lvl = int(Begin.lvl), exp = int(Begin.exp),
                  gold = int(Begin.gold), health = int(Begin.health),
@@ -24,7 +31,10 @@ class Player(object):
         self.state = state
         self.countryid = countryid
 
-    #orm
+        #std values
+        self.last_message = None
+
+    #orm (NOT FINAL!!!!)
 
     def push(self): #not sure, if needed
         raise NotImplementedError
@@ -35,7 +45,7 @@ class Player(object):
     def synchronize(self): #oRm method, to synchronize object with DB uses pull and push
         raise NotImplementedError
 
-    #player interfaces, used by prosess
+    #player interfaces, used by process
 
     def show_stats(self): 
         raise NotImplementedError
@@ -49,27 +59,28 @@ class Player(object):
     def generate_dlink(self):
         raise NotImplementedError
 
-    def std_ans(self):
+    def customtxt(self):
         raise NotImplementedError
 
     #programm interfaces
 
-    def prosess(self, message):
-        if message == Buttons.stats:
-            show_stats()
-        elif message == Buttons.quest:
-            go_to_quest()
-        elif message == Buttons.top:
-            show_top()
-        elif message == Buttons.duel:
-            generate_dlink(self)
-        else:
-            std_ans()
+    def process(self, message):
+        self.last_message = message
+        Player.answers.get(message, customtxt())()
 
     def add_exp(self, exp):
+        raise NotImplementedError
+
+    def check_quest(self):
         raise NotImplementedError
 
     #private metods
 
     def _level_up(self):
+        raise NotImplementedError
+    
+    def _return_from_quest(self):
+        raise NotImplementedError
+
+    def _check_dlink(self):
         raise NotImplementedError

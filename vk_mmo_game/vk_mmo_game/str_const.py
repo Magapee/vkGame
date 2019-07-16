@@ -44,7 +44,7 @@ fracs0 = {1:"Сумрачный замок", 2:"Мятный замок", 3:"П�
 fracs1 = { }
 
 
-class DbNames(): #columns of players table
+class UsersColumns(): #columns of players table
     id = "id"
     exp = "exp"
     lvl = "lvl"

@@ -1,4 +1,5 @@
 import random
+import multiprocessing as mp
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 #from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType #не используется на данный момент
@@ -17,16 +18,19 @@ class Game():
     def __init__(self):
         logger.logger() #I've fuck that shit
         logger.log("Initialization...")
-        str_const.set_fracs_list()
-        vk_session = vk_api.VkApi(token = vk_token.token)
+        
 
+        vk_session = vk_api.VkApi(token = vk_token.token)
         self.vk = vk_session.get_api()
         self.longpoll = VkLongPoll(vk_session, wait = const.wait)
+
+        str_const.set_fracs_list()
         self.is_running = True
-        #self.counter = 0
-        self.player = PlayerManager()
-        self.database = LiteDB(const.db_name)
-        self.quest = Quest()
+        with mp.Manager() as manager:
+            self.database = LiteDB(const.db_name)
+            self.players_list = manager.Array(
+            self.player_manager, self.players_list = PlayerManager()
+
         logger.log("Initialization complete!")
 
     def process(self):
