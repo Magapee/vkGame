@@ -1,10 +1,11 @@
 import random
 import multiprocessing as mp
+from multiprocessing import managers as mn
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 #from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType #не используется на данный момент
-from litedb import LiteDB
-from player import PlayerManager
+from litedb import DB
+from player_manager import PlayerManager
 import keyboard
 import logger
 import const
@@ -14,23 +15,41 @@ from quest import Quest
 
 __version__="0.1.0a" #object update
 
+
+class Manager(mn.BaseManager):
+    pass
+
+Manager.register('PlayersManager', PlayerManager)
+
+
+
+
 class Game():
     def __init__(self):
-        logger.logger() #I've fuck that shit
+        logger.logger() #I fuck that shit
         logger.log("Initialization...")
         
 
         vk_session = vk_api.VkApi(token = vk_token.token)
         self.vk = vk_session.get_api()
         self.longpoll = VkLongPoll(vk_session, wait = const.wait)
-
         str_const.set_fracs_list()
-        self.is_running = True
-        with mp.Manager() as manager:
-            self.database = LiteDB(const.db_name)
-            self.player_manager = PlayerManager()
+        self.database = DB(const.db_name)
+
+        with Manager() as manager:
+            self.player_manager = manager.PlayerManager()
+            self.is_running = manager.Value('i', 1)
 
         logger.log("Initialization complete!")
+
+
+
+    def ans_thread(self, manager):
+        raise NotImplementedError
+
+    def not_ans_thread(self, manager):
+        raise NotImplementedError
+
 
     def process(self):
         while self.is_running:

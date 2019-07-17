@@ -5,8 +5,7 @@
     <ProjectGuid>09523877-966f-4174-9376-7459d0bdfd4a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>main.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <SearchPath>Interfaces;Consts</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>vk_mmo_game</Name>
@@ -21,32 +20,37 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="const.py" />
-    <Compile Include="mes_constructors.py" />
-    <Compile Include="keyboard.py" />
+    <Compile Include="Consts\const.py" />
+    <Compile Include="OLD\mes_constructors.py" />
+    <Compile Include="Consts\keyboard.py" />
     <Compile Include="logger.py" />
     <Compile Include="player.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="player_interface.py">
+    <Compile Include="OLD\player_interface.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="player_manager.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="quest.py" />
-    <Compile Include="str_const.py" />
+    <Compile Include="Consts\str_const.py" />
     <Compile Include="vkgame.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="litedb.py">
+    <Compile Include="Interfaces\litedb.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py" />
-    <Compile Include="OLD_player_manager.py">
+    <Compile Include="OLD\OLD_player_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="vk_token.py" />
+    <Compile Include="Consts\vk_token.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Consts\" />
+    <Folder Include="OLD\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

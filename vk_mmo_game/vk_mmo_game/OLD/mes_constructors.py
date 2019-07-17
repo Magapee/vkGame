@@ -1,7 +1,7 @@
 import str_const
 from str_const import Strs, NameCase, Messages
 from const import PlayersFields
-from litedb import LiteDB
+from litedb import DB
 
 def hero_message(user_id, database):
     info = database.select("""*""", """id""", user_id)

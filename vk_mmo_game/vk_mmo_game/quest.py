@@ -6,7 +6,7 @@ import str_const
 from str_const import UsersColumns
 from str_const import Buttons
 from str_const import Messages
-from litedb import LiteDB
+from litedb import DB
 from player_interface import PlayerInterface
 
 import vk_api

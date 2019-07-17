@@ -7,7 +7,7 @@ from str_const import UsersColumns
 from str_const import Buttons
 from str_const import Messages
 from str_const import NameCase
-from litedb import LiteDB
+from litedb import DB
 from quest import Quest
 
 import vk_api

@@ -62,7 +62,7 @@ class Player(object):
 
     def process(self, message):
         self.last_message = message
-        Player.answers.get(message, customtxt())()
+        Player.answers.get(self.last_message, customtxt())()
 
     def add_exp(self, exp):
         raise NotImplementedError

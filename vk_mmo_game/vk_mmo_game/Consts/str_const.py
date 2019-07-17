@@ -44,15 +44,24 @@ fracs0 = {1:"Сумрачный замок", 2:"Мятный замок", 3:"П�
 fracs_quantity = len(fracs0)
 fracs1 = { }
 
+users_tb = "users"
 
-class UsersColumns(): #columns of players table
-    id = "id"
-    exp = "exp"
-    lvl = "lvl"
-    countryid = "countryid"
-    quest = "exp +1"
-    winscounter = "winscounter"
-    stop = "Stop"
+UsersColumnsNames = { #columns of players table
+    id : "id",
+    exp : "exp",
+    lvl : "lvl",
+    countryid : "countryid",
+    quest : "exp +1",
+    winscounter : "winscounter",
+    stop : "Stop"}
+
+DBTypes = { #types of sqlite3
+    integer : "INTEGER"}
+
+UsersColumns = {}
+for key in UsersColumnsNames: #generate links between names of columns and their types
+    UsersColumns[key] = DBTypes[integer]
+
 
 class Buttons():
     stats = "hero"
