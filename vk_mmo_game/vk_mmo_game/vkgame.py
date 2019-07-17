@@ -28,8 +28,7 @@ class Game():
         self.is_running = True
         with mp.Manager() as manager:
             self.database = LiteDB(const.db_name)
-            self.players_list = manager.Array(
-            self.player_manager, self.players_list = PlayerManager()
+            self.player_manager = PlayerManager()
 
         logger.log("Initialization complete!")
 

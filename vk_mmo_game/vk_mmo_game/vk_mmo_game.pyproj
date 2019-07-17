@@ -31,6 +31,9 @@
     <Compile Include="player_interface.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="player_manager.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="quest.py" />
     <Compile Include="str_const.py" />
     <Compile Include="vkgame.py">
@@ -40,7 +43,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py" />
-    <Compile Include="player_manager.py">
+    <Compile Include="OLD_player_manager.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="vk_token.py" />

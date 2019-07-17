@@ -39,8 +39,9 @@ class NameCase: #падежи для вк (cases, for vk only for now)
 
 
 
-fracs_quantity = 3
+
 fracs0 = {1:"Сумрачный замок", 2:"Мятный замок", 3:"Пидорский замок"} #needed to change name + comments
+fracs_quantity = len(fracs0)
 fracs1 = { }
 
 

@@ -5,11 +5,10 @@ from str_const import Buttons
 
 class Player(object):
 
-    answers = {
-                Buttons.stats : show_stats(),
-                Buttons.quest : go_to_quest(),
-                Buttons.top : show_top(),
-                Buttons.duel : generate_dlink()}
+    answers = {Buttons.stats : show_stats(),
+               Buttons.quest : go_to_quest(),
+               Buttons.top : show_top(),
+               Buttons.duel : generate_dlink()}
 
     def __init__(self, id, lock, database, #required params
                  lvl = int(Begin.lvl), exp = int(Begin.exp),
@@ -36,13 +35,10 @@ class Player(object):
 
     #orm (NOT FINAL!!!!)
 
-    def push(self): #not sure, if needed
+    def commit(self): #oRm method, to synchronize object with DB uses pull and push
         raise NotImplementedError
 
-    def pull(self): #not sure, if needed
-        raise NotImplementedError
-
-    def synchronize(self): #oRm method, to synchronize object with DB uses pull and push
+    def pull(self):
         raise NotImplementedError
 
     #player interfaces, used by process
