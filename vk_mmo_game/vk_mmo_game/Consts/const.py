@@ -1,6 +1,6 @@
 
-admins = 1, 385124486, 308831692
-db_name = "Users.db"
+admins = 385124486, 308831692
+db_name = "Game.db"
 
 class State():
     unregistered = '0'

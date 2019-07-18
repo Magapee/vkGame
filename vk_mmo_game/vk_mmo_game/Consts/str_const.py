@@ -46,21 +46,33 @@ fracs1 = { }
 
 users_tb = "users"
 
-UsersColumnsNames = { #columns of players table
-    id : "id",
-    exp : "exp",
-    lvl : "lvl",
-    countryid : "countryid",
-    quest : "exp +1",
-    winscounter : "winscounter",
-    stop : "Stop"}
+class UsersColumnsNames(): #columns of players table
+    id = "id"
+    exp = "exp"
+    lvl = "lvl"
+    countryid = "countryid"
+    winscounter = "winscounter"
+    state = "state"
+    health = "health"
+    quest_end = "quest_end"
 
-DBTypes = { #types of sqlite3
-    integer : "INTEGER"}
+class DBTypes(): # types of sqlite3
+    integer = "INTEGER"
 
-UsersColumns = {}
-for key in UsersColumnsNames: #generate links between names of columns and their types
-    UsersColumns[key] = DBTypes[integer]
+UsersColumns = {UsersColumnsNames.id : DBTypes.integer,
+                UsersColumnsNames.exp : DBTypes.integer,
+                UsersColumnsNames.lvl : DBTypes.integer,
+                UsersColumnsNames.countryid: DBTypes.integer,
+                UsersColumnsNames.winscounter : DBTypes.integer,
+                UsersColumnsNames.state : DBTypes.integer,
+                UsersColumnsNames.health : DBTypes.integer,
+                UsersColumnsNames.quest_end : DBTypes.integer,
+                }
+
+n = 0
+for k, item in UsersColumns.items():
+    UsersColumns[k] = (item, n)
+    n += 1
 
 
 class Buttons():

@@ -21,6 +21,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Consts\const.py" />
+    <Compile Include="Interfaces\vk.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="OLD\mes_constructors.py" />
     <Compile Include="Consts\keyboard.py" />
     <Compile Include="logger.py" />
