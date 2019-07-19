@@ -1,4 +1,5 @@
 from enum import Enum
+from vk import Emoji
 
 
 str_end = ": " #comment!
@@ -62,6 +63,17 @@ class UsersColumns(Enum): # колонки пользователей
     
 n = 0
 for colums in UsersColumns: # заполнение номеров колонок
+    colums.value.number = n
+    n += 1  
+
+
+class LvlColumns(Enum):
+    lvl = Column("lvl", DBTypes.integer, 0)
+    exp = Column("exp", DBTypes.integer, 0)
+
+
+n = 0
+for colums in LvlColumns: # заполнение номеров колонок
     colums.value.number = n
     n += 1  
 

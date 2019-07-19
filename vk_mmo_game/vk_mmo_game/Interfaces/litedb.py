@@ -2,7 +2,7 @@ import sqlite3
 import const
 import str_const
 from const import Begin
-from str_const import UsersColumns
+from str_const import UsersColumns, LvlColumns
 
 #TODO change the order of methods
 
@@ -11,12 +11,13 @@ class DB():
         self.name = db_name
         self.db = sqlite3.connect(const.db_name)
         self.cursor = self.db.cursor()
-        self._init_users_tb()
+        self._init_table(const.table_users, UsersColumns)
+        self._init_table(const.table_lvl, LvlColumns)
 
-    def _init_users_tb(self): #initializing users db, creating it if not exists
-        request = """CREATE TABLE IF NOT EXISTS users ("""
-        for colum in UsersColumns:
-            request += colum.value.name + ' ' + colum.value.type + ', '
+    def _init_table(self, table_name, columns_name): # initializing table_name db, creating it if not exists
+        request = f'CREATE TABLE IF NOT EXISTS {table_name} ('
+        for column in columns_name:
+            request += f'{column.value.name} {column.value.type}, '
         request = request[0:-2]
         request += ')'
         self._execute(request)
@@ -26,11 +27,11 @@ class DB():
         self.db.commit()
         return self.cursor.fetchall()
 
-    def get_players(self): #returns array of users
-        return self._execute("""SELECT * FROM """ + str_const.users_tb)
+    def get_players(self): # returns array of users
+        return self._execute(f'SELECT * FROM {str_const.users_tb}')
 
     def update_user(self, user):
-        request = """INSERT OR REPLACE INTO users("""
+        request = f'INSERT OR REPLACE INTO {const.table_users}('
         for el in user:
             request += el + ', '
         request = requst[0:-2]
@@ -38,14 +39,5 @@ class DB():
         return self._execute(request)
         
     def insert_new(self, user_id): #comment
-        self._execute("""INSERT INTO users VALUES ( """ 
-                            + str(user_id) + """, """ 
-                            + Begin.gold + """, """ 
-                            + Begin.exp + """, """ 
-                            + Begin.lvl +  """, """ 
-                            + Begin.country +  """, """  
-                            + Begin.win  +  """, """ 
-                            + Begin.state +  """, """ 
-                            + Begin.attack +  """, """ 
-                            + Begin.health +  """, """ 
-                            + Begin.quest_end + """ )""")
+        self._execute(f'INSERT INTO {const.table_users} VALUES ( {user_id}, {Begin.gold}, {Begin.exp}, {Begin.lvl}, ' 
+                      + f'{Begin.country}, {Begin.win}, {Begin.state}, {Begin.attack}, {Begin.health}, {Begin.quest_end})')
