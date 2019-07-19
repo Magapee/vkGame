@@ -1,24 +1,12 @@
 
-admins = 385124486, 308831692
+admins = 385124486, 308831692, 129640173
 db_name = "Game.db"
+random = 10 ** 100000
 
 class State():
     unregistered = '0'
     normal = '1'
     forest = '2'
-
-class PlayersFields():
-    id = 0
-    gold = 1
-    exp = 2
-    lvl = 3
-    countryId = 4
-    winscounter = 5
-    state = 6
-    attack = 7
-    health = 8
-    quest_end = 9
-
 
 
 class LvlsFields():
@@ -26,7 +14,6 @@ class LvlsFields():
     exp = 1
 
 wait = 3
-
 
 
 class Begin():

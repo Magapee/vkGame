@@ -4,7 +4,7 @@ from vk_api.longpoll import VkEventType
 from multiprocessing import RLock
 from player import Player
 from litedb import DB
-from str_const import UsersColumnsNames, UsersColumns
+from str_const import UsersColumns
 
 
 class PlayerManager(object):
