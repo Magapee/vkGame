@@ -1,3 +1,5 @@
+from enum import Enum
+
 class Emoji: #emoji for vk
     gold = "&#128176;"
     fire = "&#128293;"
@@ -46,7 +48,15 @@ fracs1 = { }
 
 users_tb = "users"
 
-class UsersColumnsNames(): #columns of players table
+
+class Colum:
+    def __init__(self, name, type, number):
+        self.name = name
+        self.type = type
+        self.number = number
+
+
+class UsersColumnsNames(): #columns of players table Это можно будет убрать и везде где используется заменить на enum ниже
     id = "id"
     exp = "exp"
     lvl = "lvl"
@@ -59,20 +69,18 @@ class UsersColumnsNames(): #columns of players table
 class DBTypes(): # types of sqlite3
     integer = "INTEGER"
 
-UsersColumns = {UsersColumnsNames.id : DBTypes.integer,
-                UsersColumnsNames.exp : DBTypes.integer,
-                UsersColumnsNames.lvl : DBTypes.integer,
-                UsersColumnsNames.countryid: DBTypes.integer,
-                UsersColumnsNames.winscounter : DBTypes.integer,
-                UsersColumnsNames.state : DBTypes.integer,
-                UsersColumnsNames.health : DBTypes.integer,
-                UsersColumnsNames.quest_end : DBTypes.integer,
-                }
 
-n = 0
-for k, item in UsersColumns.items():
-    UsersColumns[k] = (item, n)
-    n += 1
+class UsersColumns(Enum):
+    id = Colum("id", DBTypes.integer, 0)
+    exp = Colum("exp", DBTypes.integer, 1)
+    lvl =  Colum("lvl", DBTypes.integer, 2)
+    countryid = Colum("countryid", DBTypes.integer, 3)
+    winscounter = Colum("winscounter", DBTypes.integer, 4)
+    state = Colum("state", DBTypes.integer, 5)
+    health = Colum("health", DBTypes.integer, 6)
+    quest_end = Colum("quest_end", DBTypes.integer, 7)
+    
+        
 
 
 class Buttons():
