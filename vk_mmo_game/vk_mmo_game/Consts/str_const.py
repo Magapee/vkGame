@@ -23,6 +23,20 @@ class Strs: #building strings for messages to players
     attack = Emoji.dagger + Words.attack + str_end
 
 
+class Level:
+    def __init__(self, number, exp):
+        self.number = number
+        self.exp = exp
+
+
+class Levels(Enum):
+    first = Level(1, 5)
+    second = Level(2, 10)
+    third = Level(3, 20)
+    fourth = Level(4, 40)
+    fifth = Level(5, 9999)
+
+
 class NameCase: #падежи для вк (cases, for vk only for now)
     nom = "nom" #именительный
     gen = "gen" #родительный
@@ -60,22 +74,21 @@ class UsersColumns(Enum): # колонки пользователей
     health = Column("health", DBTypes.integer, 0)
     quest_end = Column("quest_end", DBTypes.integer, 0)
 
-    
-n = 0
-for colums in UsersColumns: # заполнение номеров колонок
-    colums.value.number = n
-    n += 1  
 
-
-class LvlColumns(Enum):
+class LvlColumns(Enum): # колонки уровней
     lvl = Column("lvl", DBTypes.integer, 0)
     exp = Column("exp", DBTypes.integer, 0)
 
 
-n = 0
-for colums in LvlColumns: # заполнение номеров колонок
-    colums.value.number = n
-    n += 1  
+def _fill_colomn_numbers(column_name): # заполнение номеров колонок
+    n = 0
+    for colums in column_name:
+        colums.value.number = n
+        n += 1  
+
+
+_fill_colomn_numbers(UsersColumns)
+_fill_colomn_numbers(LvlColumns)
 
 
 class Buttons():

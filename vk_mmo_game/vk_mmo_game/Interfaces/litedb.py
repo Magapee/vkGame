@@ -2,7 +2,7 @@ import sqlite3
 import const
 import str_const
 from const import Begin
-from str_const import UsersColumns, LvlColumns
+from str_const import UsersColumns, LvlColumns, Levels
 
 #TODO change the order of methods
 
@@ -13,6 +13,8 @@ class DB():
         self.cursor = self.db.cursor()
         self._init_table(const.table_users, UsersColumns)
         self._init_table(const.table_lvl, LvlColumns)
+        if not self._execute(f'SELECT * FROM {const.table_lvl}'):
+            self._fill_lvl_tb()
 
     def _init_table(self, table_name, columns_name): # initializing table_name db, creating it if not exists
         request = f'CREATE TABLE IF NOT EXISTS {table_name} ('
@@ -26,6 +28,14 @@ class DB():
         self.cursor.execute(statement)
         self.db.commit()
         return self.cursor.fetchall()
+
+    def _fill_lvl_tb(self): # заполняем таблицу уровнями и опытом
+        self._execute(f'INSERT INTO {const.table_lvl} VALUES ({Levels.first.value.number}, {Levels.first.value.exp})')
+        self._execute(f'INSERT INTO {const.table_lvl} VALUES ({Levels.second.value.number}, {Levels.second.value.exp})')
+        self._execute(f'INSERT INTO {const.table_lvl} VALUES ({Levels.third.value.number}, {Levels.third.value.exp})')
+        self._execute(f'INSERT INTO {const.table_lvl} VALUES ({Levels.fourth.value.number}, {Levels.fourth.value.exp})')
+        self._execute(f'INSERT INTO {const.table_lvl} VALUES ({Levels.fifth.value.number}, {Levels.fifth.value.exp})')
+
 
     def get_players(self): # returns array of users
         return self._execute(f'SELECT * FROM {str_const.users_tb}')
