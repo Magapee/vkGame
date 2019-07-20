@@ -7,8 +7,8 @@ import str_const
 from str_const import Buttons
 from str_const import Messages
 from litedb import DB
-from player_interface import PlayerInterface
 
+from vk import Messenger
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 import random
@@ -18,10 +18,12 @@ class Quest():
     def __init__(self):
         self.players_on_quests = { }
 
-    def quest(self, vk, event, database):#Квест
+    def quest(self, event, database):#Квест
         logger.log("quest", event.user_id)
         self.players_on_quests[event.user_id] = datetime.datetime.now() + datetime.timedelta(seconds = 10)
-        vk.messages.send(user_id=event.user_id, message=Messages.ok, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
+        messenger = Messenger()
+        messenger.send_mes(user_id = event.user_id, message = Messages.ok, keyboard = str_const.ListButtons.list_buttons, False)
+        #vk.messages.send(user_id=event.user_id, message=Messages.ok, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
 
     def check_quest(self, vk, database):
         #print(datetime.datetime.now().strftime("%H:%M:%S"))
@@ -32,5 +34,7 @@ class Quest():
                 if time.days < 0:
                     players_on_quests_b.pop(id, None)
                     PlayerInterface.add_exp(2, id, database)
-                    vk.messages.send(user_id=id, message="Квест окончен", random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
+                    messenger = Messenger()
+                    messenger.send_mes(user_id = id, message = "Квест окончен", keyboard = str_const.ListButtons.list_buttons, False)
+                    #vk.messages.send(user_id=id, message="Квест окончен", random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
         self.players_on_quests = players_on_quests_b.copy()

@@ -6,7 +6,6 @@ import vk_token
 import const
 
 
-
 class Messenger:
     def __init__(self): # Подключение к серверу вк для дальнейшей работы
         vk_session = vk_api.VkApi(token = vk_token.token)
@@ -50,11 +49,6 @@ class Emoji: # emoji for vk
     bow = "&#371771;"
     heart = "&#10084;"
 
-
-class Button:
-    def __init__(self, label, color):
-        self.label = label
-        self.color = color
         
 
 def _create_button(label, color, payload=""): # Создать кнопку
