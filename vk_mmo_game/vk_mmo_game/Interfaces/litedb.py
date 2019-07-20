@@ -46,6 +46,6 @@ class DB():
         request += ')'
         return self._execute(request)
         
-    def insert_new(self, user_id): #comment
+    def insert_new(self, user_id): # добавить нового пользователя user_id
         self._execute(f'INSERT INTO {const.table_users} VALUES ( {user_id}, {Begin.gold}, {Begin.exp}, {Begin.lvl}, ' 
                       + f'{Begin.country}, {Begin.win}, {Begin.state}, {Begin.attack}, {Begin.health}, {Begin.quest_end})')

@@ -4,6 +4,7 @@ import str_const
 from str_const import UsersColumns
 from str_const import Buttons
 from str_const import Strs
+import quest
 
 class Player(object):
 
@@ -12,18 +13,19 @@ class Player(object):
     def __init__(self, database, messenger, raw_player):
 
         #requred args
-        #self.id = raw_player[UsersColumns[UsersColumnsNames.id][1]] #id of player, for vk = vk id
         self.database = database #database for players
         self.messenger = messenger
 
-        self.id = UsersColumns.id.value.number
-        self.exp = UsersColumns.exp.value.number
-        self.lvl = UsersColumns.lvl.value.number
-        self.countryid = UsersColumns.countryid.value.number
-        self.winscounter = UsersColumns.winscounter.value.number
-        self.state = UsersColumns.state.value.number
-        self.health = UsersColumns.health.value.number
-        self.quest_end = UsersColumns.quest_end.value.number
+        self.id = raw_player[UsersColumns.id.value.number] # id of player
+        self.gold = raw_player[UsersColumns.gold.value.number]
+        self.exp = raw_player[UsersColumns.exp.value.number]
+        self.lvl = raw_player[UsersColumns.lvl.value.number]
+        self.countryid = raw_player[UsersColumns.countryid.value.number]
+        self.winscounter = raw_player[UsersColumns.winscounter.value.number]
+        self.state = raw_player[UsersColumns.state.value.number]
+        self.attack = raw_player[UsersColumns.attack.value.number]
+        self.health = raw_player[UsersColumns.health.value.number]
+        self.quest_end = raw_player[UsersColumns.quest_end.value.number]
         
         #std values
         self.last_message = None
@@ -36,13 +38,15 @@ class Player(object):
 
     def commit(self): #oRm method
         raw_user = [self.id,
-                   self.exp,
-                   self.lvl,
-                   self.countryid,
-                   self.winscounter,
-                   self.state,
-                   self.health,
-                   self.quest_end]
+                    self.gold,
+                    self.exp,
+                    self.lvl,
+                    self.countryid,
+                    self.winscounter,
+                    self.state,
+                    self.attack,
+                    self.health,
+                    self.quest_end]
         self.db.update_user(raw_user)
 
     def pull(self):
@@ -54,7 +58,7 @@ class Player(object):
         self.messenger.send_mes(self.id, text)
 
     def show_stats(self): 
-        message = (str_const.fracs0[self.countryid] + " " + str_const.Words.guild_name + "\n" +
+        message = (str_const.frac_by_number[self.countryid] + " " + str_const.Words.guild_name + "\n" +
                     Strs.lvl + str(self.lvl) + "\n" +
                     Strs.exp + str(self.exp) + "\n" +
                     Strs.gold + str(0) + "\n" +
@@ -83,7 +87,7 @@ class Player(object):
 
 
     def add_exp(self, exp):
-        raise NotImplementedError
+        self.exp += exp
 
     def check_quest(self):
         raise NotImplementedError
@@ -91,7 +95,7 @@ class Player(object):
     #private metods
 
     def _level_up(self):
-        raise NotImplementedError
+        self.level += 1
     
     def _return_from_quest(self):
         raise NotImplementedError

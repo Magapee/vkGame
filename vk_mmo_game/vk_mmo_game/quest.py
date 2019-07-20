@@ -1,16 +1,11 @@
 import logger
 import keyboard
-import mes_constructors
+#import mes_constructors
 import const
-import str_const
-#from str_const import UsersColumns
-from str_const import Buttons
 from str_const import Messages
 from litedb import DB
 
 from vk import Messenger
-import vk_api
-from vk_api.longpoll import VkLongPoll, VkEventType
 import random
 import datetime
 
@@ -22,10 +17,9 @@ class Quest():
         logger.log("quest", event.user_id)
         self.players_on_quests[event.user_id] = datetime.datetime.now() + datetime.timedelta(seconds = 10)
         messenger = Messenger()
-        messenger.send_mes(user_id = event.user_id, message = Messages.ok, keyboard = str_const.ListButtons.list_buttons, False)
-        #vk.messages.send(user_id=event.user_id, message=Messages.ok, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
+        messenger.send_mes(user_id = event.user_id, message = Messages.ok, keyboard = keyboard.ListButtons.list_buttons, one_time = False)\
 
-    def check_quest(self, vk, database):
+    def check_quest(self, database):
         #print(datetime.datetime.now().strftime("%H:%M:%S"))
         players_on_quests_b = self.players_on_quests.copy()
         for id in self.players_on_quests:
@@ -35,6 +29,5 @@ class Quest():
                     players_on_quests_b.pop(id, None)
                     PlayerInterface.add_exp(2, id, database)
                     messenger = Messenger()
-                    messenger.send_mes(user_id = id, message = "Квест окончен", keyboard = str_const.ListButtons.list_buttons, False)
-                    #vk.messages.send(user_id=id, message="Квест окончен", random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, id))
+                    messenger.send_mes(user_id = id, message = "Квест окончен", keyboard = keyboard.ListButtons.list_buttons, one_time = False)
         self.players_on_quests = players_on_quests_b.copy()

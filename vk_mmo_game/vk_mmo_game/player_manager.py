@@ -11,7 +11,7 @@ class PlayerManager(object):
     def __init__(self):
         self.db = DB(const.db_name)
         #self.messenger = vk.Messenger()
-        self._init_player_dict(self)
+        self._init_player_dict()
 
     def procces_ans(self):
         events = self.messenger.check()
@@ -28,12 +28,16 @@ class PlayerManager(object):
                         self._register_player(id)
 
     def _register_player(self, id):
-        raise NotImplementedError
+        self.db.insert_new(id)
+        self.players[id] = Player(self.db,
+                                  self.messenger,
+                                  (id, Begin.gold, Begin.exp, Begin.lvl, Begin.country, Begin.win,
+                                   Begin.state, Begin.attack, Begin.health, Begin.quest_end))
 
-    def _init_player_dict(self, a):
+    def _init_player_dict(self):
         self.players = {}
-        raw_players = self.db.get_players() #list
+        raw_players = self.db.get_players() #list 
         for player in raw_players:
-            self.players[UsersColumns.id.number] = Player(self.db,
-                                                          self.messenger,
-                                                          player)
+            self.players[player[UsersColumns.id.number]] = Player(self.db,
+                                                           self.messenger,
+                                                           player)

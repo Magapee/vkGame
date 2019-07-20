@@ -6,6 +6,12 @@ import vk_token
 import const
 
 
+class Button:
+    def __init__(self, label, color):
+        self.label = label
+        self.color = color
+
+
 class Messenger:
     def __init__(self): # Подключение к серверу вк для дальнейшей работы
         vk_session = vk_api.VkApi(token = vk_token.token)
@@ -17,7 +23,7 @@ class Messenger:
         if list_string_buttons is not None:
             keyboard = self._create_keyboard(list_string_buttons, is_one_time)
         random.seed()
-        self.vk.messages.send(user_id = id, message = mes, random_id = random.randrange(1, сonst.random), keyboard = keyboard)
+        self.vk.messages.send(user_id = id, message = mes, random_id = random.randrange(1, const.random), keyboard = keyboard)
 
     def check(self): # Получить события от сервера вк 
         return self.long_poll.check()
