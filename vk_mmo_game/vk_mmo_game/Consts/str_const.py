@@ -23,18 +23,7 @@ class Strs: #building strings for messages to players
     attack = Emoji.dagger + Words.attack + str_end
 
 
-class Level:
-    def __init__(self, number, exp):
-        self.number = number
-        self.exp = exp
-
-
-class Levels(Enum):
-    first = Level(1, 5)
-    second = Level(2, 10)
-    third = Level(3, 20)
-    fourth = Level(4, 40)
-    fifth = Level(5, 9999)
+level_exp = [5, 10, 20, 40, 9999] # список из количества опыта для каждого уровня
 
 
 class NameCase: #падежи для вк (cases, for vk only for now)
@@ -53,7 +42,7 @@ fracs1 = { }
 users_tb = "users"
 
 
-class Column:
+class Column: # колонка для бд
     def __init__(self, name, type, number):
         self.name = name
         self.type = type

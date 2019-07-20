@@ -2,7 +2,7 @@ import sqlite3
 import const
 import str_const
 from const import Begin
-from str_const import UsersColumns, LvlColumns, Levels
+from str_const import UsersColumns, LvlColumns
 
 #TODO change the order of methods
 
@@ -30,13 +30,11 @@ class DB():
         return self.cursor.fetchall()
 
     def _fill_lvl_tb(self): # заполняем таблицу уровнями и опытом
-        self._execute(f'INSERT INTO {const.table_lvl} VALUES ({Levels.first.value.number}, {Levels.first.value.exp})')
-        self._execute(f'INSERT INTO {const.table_lvl} VALUES ({Levels.second.value.number}, {Levels.second.value.exp})')
-        self._execute(f'INSERT INTO {const.table_lvl} VALUES ({Levels.third.value.number}, {Levels.third.value.exp})')
-        self._execute(f'INSERT INTO {const.table_lvl} VALUES ({Levels.fourth.value.number}, {Levels.fourth.value.exp})')
-        self._execute(f'INSERT INTO {const.table_lvl} VALUES ({Levels.fifth.value.number}, {Levels.fifth.value.exp})')
-
-
+        number = 1
+        for exp in str_const.level_exp:
+            self._execute(f'INSERT INTO {const.table_lvl} VALUES ({number}, {exp})')
+            number += 1
+                       
     def get_players(self): # returns array of users
         return self._execute(f'SELECT * FROM {str_const.users_tb}')
 
