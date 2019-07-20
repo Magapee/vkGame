@@ -15,8 +15,8 @@ class DB():
 
     def _init_users_tb(self): #initializing users db, creating it if not exists
         request = """CREATE TABLE IF NOT EXISTS users ("""
-        for key in UsersColumns:
-            request += key + ' ' + UsersColumns[key][0] + ', '
+        for colum in UsersColumns:
+            request += colum.value.name + ' ' + colum.value.type + ', '
         request = request[0:-2]
         request += ')'
         self._execute(request)

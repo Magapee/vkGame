@@ -3,7 +3,6 @@ from const import State
 import str_const
 from str_const import UsersColumns
 from str_const import Buttons
-from str_const import UsersColumnsNames
 from str_const import Strs
 
 class Player(object):
@@ -13,17 +12,18 @@ class Player(object):
     def __init__(self, database, messenger, raw_player):
 
         #requred args
-        self.id = raw_player[UsersColumns[UsersColumnsNames.id][1]] #id of player, for vk = vk id
+        #self.id = raw_player[UsersColumns[UsersColumnsNames.id][1]] #id of player, for vk = vk id
         self.database = database #database for players
         self.messenger = messenger
 
-        self.exp = UsersColumns[UsersColumnsNames.exp][1]
-        self.lvl = UsersColumns[UsersColumnsNames.lvl][1]
-        self.countryid = UsersColumns[UsersColumnsNames.countryid][1]
-        self.winscounter = UsersColumns[UsersColumnsNames.winscounter][1]
-        self.state = UsersColumns[UsersColumnsNames.state][1]
-        self.health = UsersColumns[UsersColumnsNames.health][1]
-        self.quest_end = UsersColumns[UsersColumnsNames.quest_end][1]
+        self.id = UsersColumns.id.value.number
+        self.exp = UsersColumns.exp.value.number
+        self.lvl = UsersColumns.lvl.value.number
+        self.countryid = UsersColumns.countryid.value.number
+        self.winscounter = UsersColumns.winscounter.value.number
+        self.state = UsersColumns.state.value.number
+        self.health = UsersColumns.health.value.number
+        self.quest_end = UsersColumns.quest_end.value.number
         
         #std values
         self.last_message = None

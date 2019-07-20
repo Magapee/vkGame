@@ -3,6 +3,7 @@ import json
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 import vk_token
+import const
 
 
 
@@ -17,7 +18,7 @@ class Messenger:
         if list_string_buttons is not None:
             keyboard = self._create_keyboard(list_string_buttons, is_one_time)
         random.seed()
-        self.vk.messages.send(user_id = id, message = mes, random_id = random.randrange(1, 1000000000), keyboard = keyboard)
+        self.vk.messages.send(user_id = id, message = mes, random_id = random.randrange(1, сonst.random), keyboard = keyboard)
 
     def check(self): # Получить события от сервера вк 
         return self.long_poll.check()
@@ -38,7 +39,7 @@ class Messenger:
         return keyboard
 
 
-class Emoji:
+class Emoji: # emoji for vk
     gold = "&#128176;"
     fire = "&#128293;"
     lightning = "&#9889;"
