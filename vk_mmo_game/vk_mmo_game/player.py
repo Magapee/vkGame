@@ -17,7 +17,7 @@ class Player(object):
         self.messenger = messenger
 
         self.id = raw_player[UsersColumns.id.value.number] # id of player
-        self.gold = raw_player[UsersColumns.gold.value.number]
+        self.gold = raw_player[UsersColumns.gold.value.number] # исправила туть
         self.exp = raw_player[UsersColumns.exp.value.number]
         self.lvl = raw_player[UsersColumns.lvl.value.number]
         self.countryid = raw_player[UsersColumns.countryid.value.number]

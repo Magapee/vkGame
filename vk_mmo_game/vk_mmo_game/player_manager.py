@@ -40,4 +40,4 @@ class PlayerManager(object):
         for player in raw_players:
             self.players[player[UsersColumns.id.number]] = Player(self.db,
                                                            self.messenger,
-                                                           player)
+                                                           player) # исправила туть
