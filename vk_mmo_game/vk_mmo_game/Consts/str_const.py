@@ -66,11 +66,6 @@ class UsersColumns(Enum): # колонки пользователей
     quest_end = Column("quest_end", DBTypes.integer, 0)
 
 
-class LvlColumns(Enum): # колонки уровней
-    lvl = Column("lvl", DBTypes.integer, 0)
-    exp = Column("exp", DBTypes.integer, 0)
-
-
 def _fill_colomn_numbers(column_name): # заполнение номеров колонок
     n = 0
     for colums in column_name:
@@ -78,7 +73,6 @@ def _fill_colomn_numbers(column_name): # заполнение номеров к�
         n += 1
 
 _fill_colomn_numbers(UsersColumns)
-_fill_colomn_numbers(LvlColumns)
 
 
 class Buttons():
@@ -99,11 +93,12 @@ class Messages():
     wins = "Побед: "
     in_duel_with = "в сражении с"
     with_link = "по"
+    finish_quest = "Квест окончен"
 
 
 plus = " + 1"
 
 
-def set_fracs_list(): # но ведь это будет не список а словарь
+def set_fracs_list():
     for i in range(1, fracs_quantity + 1):
         number_by_frac[frac_by_number[i]] = i
