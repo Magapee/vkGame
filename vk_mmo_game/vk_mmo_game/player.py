@@ -6,12 +6,8 @@ from str_const import Buttons
 from str_const import Strs
 import quest
 
-class Player(object):
-
-    
-
+class Player(object): 
     def __init__(self, database, messenger, raw_player):
-
         #requred args
         self.database = database #database for players
         self.messenger = messenger
@@ -88,6 +84,11 @@ class Player(object):
 
     def add_exp(self, exp):
         self.exp += exp
+        exp_next_lvl = str_const.level_exp[self.lvl - 1]
+        if self.exp >= exp_next_lvl:
+            self.exp -= exp_next_lvl
+            self._level_up()
+
 
     def check_quest(self):
         raise NotImplementedError

@@ -24,7 +24,7 @@ class Quest():
         players_on_quests_b = self.players_on_quests.copy()
         for id in self.players_on_quests:
             if id != None:
-                time = players_on_quests_b.get(id, None) - datetime.datetime.now()
+                time = players_on_quests_b.get(id, None) - datetime.datetime.now() # если у нас первое выражение None, то из него нельзя ничего вычитать, будет ошибка
                 if time.days < 0:
                     players_on_quests_b.pop(id, None)
                     PlayerInterface.add_exp(2, id, database)
