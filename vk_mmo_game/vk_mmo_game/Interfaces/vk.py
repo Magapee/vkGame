@@ -43,7 +43,7 @@ class Messenger:
         keyboard = str(keyboard.decode('utf-8'))
         return keyboard
 
-
+       
 class Emoji: # emoji for vk
     gold = "&#128176;"
     fire = "&#128293;"
@@ -54,6 +54,7 @@ class Emoji: # emoji for vk
     dagger = "&#128481;"
     bow = "&#371771;"
     heart = "&#10084;"
+    Medals = {1:"&#129351;", 2:"&#129352;", 3:"&#129353;"}
 
         
 

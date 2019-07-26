@@ -3,6 +3,7 @@ db_name = "Game.db"
 random = 10 ** 100000
 table_users = "users"
 quest_exp = 1
+top_range = 10
 
 
 class State():

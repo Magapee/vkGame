@@ -39,5 +39,5 @@ class PlayerManager(object):
         raw_players = self.db.get_players() #list 
         for player in raw_players:
             self.players[player[UsersColumns.id.number]] = Player(self.db,
-                                                           self.messenger,
-                                                           player) # исправила туть
+                                                                  self.messenger,
+                                                                  player)

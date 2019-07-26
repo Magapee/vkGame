@@ -4,6 +4,7 @@ import str_const
 import const
 from str_const import UsersColumns, Buttons, Strs, Messages
 import datetime
+import vk
 
 class Player(object): 
     def __init__(self, database, messenger, raw_player):
@@ -12,7 +13,7 @@ class Player(object):
         self.messenger = messenger
 
         self.id = raw_player[UsersColumns.id.value.number] # id of player
-        self.gold = raw_player[UsersColumns.gold.value.number] # исправила туть
+        self.gold = raw_player[UsersColumns.gold.value.number]
         self.exp = raw_player[UsersColumns.exp.value.number]
         self.lvl = raw_player[UsersColumns.lvl.value.number]
         self.countryid = raw_player[UsersColumns.countryid.value.number]
@@ -69,7 +70,15 @@ class Player(object):
         self._send(Messages.ok)
 
     def show_top(self):
-        raise NotImplementedError
+        top = database.select_order(UsersColumns.id.value.name + " , " + UsersColumns.winscounter.value.name, UsersColumns.winscounter.value.name)
+        ids = top[:const.top_range]
+        top_mes = ""
+        for i in range(const.top_range):
+            if i < 3:
+                top_mes += str_const.Emoji.Medals[i + 1] + "№" + str(i + 1) + " " + str(links_to_players[ids[i]]) + ": " + str(top[i][1]) + "\n"
+            else:
+                top_mes += "№" + str(i + 1) + " " + str(links_to_players[ids[i]]) + ": " + str(top[i][1]) + "\n"
+        return top_mes
 
     def generate_dlink(self):
         #link = "duel_" + str(self.id) + str(self.count_duels)
@@ -78,9 +87,14 @@ class Player(object):
         #self.in_duel = True
         raise NotImplementedError
 
-    def customtxt(self):
-        raise NotImplementedError
-
+    def customtxt(self, message):
+        if (message == Buttons.duel or message == Buttons.quest) and self.in_duel:
+            self._send(Messages.in_duel)
+        elif (message == Buttons.duel or message == Buttons.quest) and self.time_finish_quest is not None:
+            self._send(Messages.in_quest)
+        else:
+            self._send(Messages.wrong_text)
+    
     #programm interfaces
 
     def process(self, message):
@@ -94,7 +108,7 @@ class Player(object):
         elif message == Buttons.duel and self.time_finish_quest is None and not self.in_duel:
             self.generate_dlink()
         else:
-            self.customtxt()
+            self.customtxt(message)
 
 
     def add_exp(self, exp):
