@@ -1,4 +1,5 @@
 from enum import Enum
+from vk import Emoji
 
 
 str_end = ": " #comment!
@@ -22,6 +23,9 @@ class Strs: #building strings for messages to players
     attack = Emoji.dagger + Words.attack + str_end
 
 
+level_exp = [5, 10, 20, 40, 9999] # список из количества опыта для каждого уровня
+
+
 class NameCase: #падежи для вк (cases, for vk only for now)
     nom = "nom" #именительный
     gen = "gen" #родительный
@@ -31,14 +35,14 @@ class NameCase: #падежи для вк (cases, for vk only for now)
     abl = "abl" #предложный
 
 
-fracs0 = {1:"Сумрачный замок", 2:"Мятный замок", 3:"Пидорский замок"} #needed to change name + comments
-fracs_quantity = len(fracs0)
-fracs1 = { }
+frac_by_number = {1:"Сумрачный замок", 2:"Мятный замок", 3:"Пидорский замок"} #needed to change name + comments
+fracs_quantity = len(frac_by_number)
+number_by_frac = { }
 
 users_tb = "users"
 
 
-class Column:
+class Column: # колонка для бд
     def __init__(self, name, type, number):
         self.name = name
         self.type = type
@@ -51,19 +55,24 @@ class DBTypes(): # types of sqlite3
 
 class UsersColumns(Enum): # колонки пользователей
     id = Column("id", DBTypes.integer, 0)
+    gold = Column("gold", DBTypes.integer, 0) 
     exp = Column("exp", DBTypes.integer, 0)
     lvl =  Column("lvl", DBTypes.integer, 0)
     countryid = Column("countryid", DBTypes.integer, 0)
     winscounter = Column("winscounter", DBTypes.integer, 0)
     state = Column("state", DBTypes.integer, 0)
+    attack = Column("attack", DBTypes.integer, 0)
     health = Column("health", DBTypes.integer, 0)
     quest_end = Column("quest_end", DBTypes.integer, 0)
 
-    
-n = 0
-for colums in UsersColumns: # заполнение номеров колонок
-    colums.value.number = n
-    n += 1  
+
+def _fill_colomn_numbers(column_name): # заполнение номеров колонок
+    n = 0
+    for colums in column_name:
+        colums.value.number = n
+        n += 1
+
+_fill_colomn_numbers(UsersColumns)
 
 
 class Buttons():
@@ -84,6 +93,10 @@ class Messages():
     wins = "Побед: "
     in_duel_with = "в сражении с"
     with_link = "по"
+    finish_quest = "Квест окончен"
+    in_duel = "Вы находитесь в дуэли. Действие недоступно"
+    in_quest = "Вы находитесь в квесте. Действие недоступно"
+    wrong_text = "Неизвестная команда"
 
 
 plus = " + 1"
@@ -91,4 +104,4 @@ plus = " + 1"
 
 def set_fracs_list():
     for i in range(1, fracs_quantity + 1):
-        fracs1[fracs0[i]] = i
+        number_by_frac[frac_by_number[i]] = i

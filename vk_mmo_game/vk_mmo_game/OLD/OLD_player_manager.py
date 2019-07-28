@@ -47,8 +47,8 @@ class PlayerManager():
             vk.messages.send(user_id=event.user_id, message=Messages.select_frac, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(1, event.user_id))
             database.insert_new(event.user_id)
         elif cur == [(0,)]:
-            if event.text in str_const.fracs1:
-                database.set(UsersColumns.countryid, str_const.fracs1[event.text], event.user_id)
+            if event.text in str_const.number_by_frac:
+                database.set(UsersColumns.countryid, str_const.number_by_frac[event.text], event.user_id)
                 vk.messages.send(user_id=event.user_id, message=Messages.you_faction + event.text, random_id = random.randrange(1, 10000, 1), keyboard = keyboard.getKey(2, event.user_id))
                 logger.log("registration", event.user_id)
             else:
