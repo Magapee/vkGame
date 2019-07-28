@@ -139,7 +139,7 @@ _ReSharper*/
 
 #tocken
 /vk_mmo_game/vk_mmo_game/vk_tocken.py
-*/vk_token.py
+*vk_token.py
 
 #database
 *.db
