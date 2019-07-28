@@ -38,6 +38,9 @@
     </Compile>
     <Compile Include="quest.py" />
     <Compile Include="Consts\str_const.py" />
+    <Compile Include="top.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="vkgame.py">
       <SubType>Code</SubType>
     </Compile>

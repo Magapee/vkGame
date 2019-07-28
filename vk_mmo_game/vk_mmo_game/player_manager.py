@@ -5,6 +5,7 @@ from multiprocessing import RLock
 from player import Player
 from litedb import DB
 from str_const import UsersColumns
+from top import Top
 
 
 class PlayerManager(object):
@@ -27,7 +28,7 @@ class PlayerManager(object):
                     else:
                         self._register_player(id)
 
-     def _register_player(self, id):
+    def _register_player(self, id):
         self.db.insert_new(id)
         self.players[id] = Player(self.db,
                                   self.messenger,
@@ -37,7 +38,10 @@ class PlayerManager(object):
     def _init_player_dict(self):
         self.players = {}
         raw_players = self.db.get_players() #list 
+        self.top = Top(raw_players, self.messenger)
         for player in raw_players:
             self.players[player[UsersColumns.id.value.number]] = Player(self.db,
                                                                   self.messenger,
+                                                                  self.top,
                                                                   player)
+        
