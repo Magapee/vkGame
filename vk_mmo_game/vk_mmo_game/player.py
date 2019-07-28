@@ -71,7 +71,7 @@ class Player(object):
     def show_top(self):
         top = self.top.raw_top
         message = ''
-        for i in range(1, len(top)):
+        for i in range(1, len(top) + 1):
             message += f'{i} {top[i - 1][0]} {top[i - 1][1]}\n'
         self._send(message)
 
