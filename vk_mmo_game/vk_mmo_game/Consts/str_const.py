@@ -55,14 +55,14 @@ class DBTypes(): # types of sqlite3
 
 class UsersColumns(Enum): # колонки пользователей
     id = Column("id", DBTypes.integer, 0)
-    gold = Column("gold", DBTypes.integer, 0) 
+    #gold = Column("gold", DBTypes.integer, 0) 
     exp = Column("exp", DBTypes.integer, 0)
     lvl =  Column("lvl", DBTypes.integer, 0)
     countryid = Column("countryid", DBTypes.integer, 0)
     winscounter = Column("winscounter", DBTypes.integer, 0)
     state = Column("state", DBTypes.integer, 0)
-    attack = Column("attack", DBTypes.integer, 0)
-    health = Column("health", DBTypes.integer, 0)
+    #attack = Column("attack", DBTypes.integer, 0)
+    #health = Column("health", DBTypes.integer, 0)
     quest_end = Column("quest_end", DBTypes.integer, 0)
 
 

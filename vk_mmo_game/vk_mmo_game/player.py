@@ -13,14 +13,14 @@ class Player(object):
         self.messenger = messenger
 
         self.id = raw_player[UsersColumns.id.value.number] # id of player
-        self.gold = raw_player[UsersColumns.gold.value.number]
+        #self.gold = raw_player[UsersColumns.gold.value.number]
         self.exp = raw_player[UsersColumns.exp.value.number]
         self.lvl = raw_player[UsersColumns.lvl.value.number]
         self.countryid = raw_player[UsersColumns.countryid.value.number]
         self.winscounter = raw_player[UsersColumns.winscounter.value.number]
         self.state = raw_player[UsersColumns.state.value.number]
-        self.attack = raw_player[UsersColumns.attack.value.number]
-        self.health = raw_player[UsersColumns.health.value.number]
+        #self.attack = raw_player[UsersColumns.attack.value.number]
+        #self.health = raw_player[UsersColumns.health.value.number]
         self.quest_end = raw_player[UsersColumns.quest_end.value.number]
         
         #std values
@@ -33,18 +33,18 @@ class Player(object):
         self.count_duels = 0
         self.in_duel = False
 
-    #orm (NOT FINAL!!!!)
+    #orm
 
     def commit(self): #oRm method
         raw_user = [self.id,
-                    self.gold,
+                    #self.gold,
                     self.exp,
                     self.lvl,
                     self.countryid,
                     self.winscounter,
                     self.state,
-                    self.attack,
-                    self.health,
+                    #self.attack,
+                    #self.health,
                     self.quest_end]
         self.db.update_user(raw_user)
 
@@ -59,9 +59,7 @@ class Player(object):
     def show_stats(self): 
         message = (str_const.frac_by_number[self.countryid] + " " + str_const.Words.guild_name + "\n" +
                     Strs.lvl + str(self.lvl) + "\n" +
-                    Strs.exp + str(self.exp) + "\n" +
-                    Strs.gold + str(0) + "\n" +
-                    Strs.health + str(self.health) + "\n"
+                    Strs.exp + str(self.exp) + "\n"
                     )
         self._send(message)
 
@@ -70,15 +68,16 @@ class Player(object):
         self._send(Messages.ok)
 
     def show_top(self):
-        top = database.select_order(UsersColumns.id.value.name + " , " + UsersColumns.winscounter.value.name, UsersColumns.winscounter.value.name)
-        ids = top[:const.top_range]
-        top_mes = ""
-        for i in range(const.top_range):
-            if i < 3:
-                top_mes += str_const.Emoji.Medals[i + 1] + "№" + str(i + 1) + " " + str(links_to_players[ids[i]]) + ": " + str(top[i][1]) + "\n"
-            else:
-                top_mes += "№" + str(i + 1) + " " + str(links_to_players[ids[i]]) + ": " + str(top[i][1]) + "\n"
-        return top_mes
+        #top = database.select_order(UsersColumns.id.value.name + " , " + UsersColumns.winscounter.value.name, UsersColumns.winscounter.value.name)
+        #ids = top[:const.top_range]
+        #top_mes = ""
+        #for i in range(const.top_range):
+        #    if i < 3:
+        #        top_mes += str_const.Emoji.Medals[i + 1] + "№" + str(i + 1) + " " + str(links_to_players[ids[i]]) + ": " + str(top[i][1]) + "\n"
+        #    else:
+        #        top_mes += "№" + str(i + 1) + " " + str(links_to_players[ids[i]]) + ": " + str(top[i][1]) + "\n"
+        #return top_mes
+        raise NotImplementedError
 
     def generate_dlink(self):
         #link = "duel_" + str(self.id) + str(self.count_duels)
@@ -88,27 +87,28 @@ class Player(object):
         raise NotImplementedError
 
     def customtxt(self, message):
-        if (message == Buttons.duel or message == Buttons.quest) and self.in_duel:
-            self._send(Messages.in_duel)
-        elif (message == Buttons.duel or message == Buttons.quest) and self.time_finish_quest is not None:
-            self._send(Messages.in_quest)
-        else:
-            self._send(Messages.wrong_text)
+        #if (message == Buttons.duel or message == Buttons.quest) and self.in_duel:
+        #    self._send(Messages.in_duel)
+        #elif (message == Buttons.duel or message == Buttons.quest) and self.time_finish_quest is not None:
+        #    self._send(Messages.in_quest)
+        #else:
+        #    self._send(Messages.wrong_text)
+        raise NotImplementedError
     
     #programm interfaces
 
     def process(self, message):
         self.last_message = message
-        if message == Buttons.stats:
+        if self.last_message == Buttons.stats:
             self.show_stats()
-        elif message == Buttons.quest and self.time_finish_quest is None and not self.in_duel:
+        elif self.last_message == Buttons.quest and self.time_finish_quest is None and not self.in_duel:
             self.go_to_quest()
-        elif message == Buttons.top:
+        elif self.last_message == Buttons.top:
             self.show_top()
-        elif message == Buttons.duel and self.time_finish_quest is None and not self.in_duel:
+        elif self.last_message == Buttons.duel and self.time_finish_quest is None and not self.in_duel:
             self.generate_dlink()
         else:
-            self.customtxt(message)
+            self.customtxt(self.last_message)
 
 
     def add_exp(self, exp):

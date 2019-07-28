@@ -10,7 +10,7 @@ from str_const import UsersColumns
 class PlayerManager(object):
     def __init__(self):
         self.db = DB(const.db_name)
-        #self.messenger = vk.Messenger()
+        self.messenger = vk.Messenger()
         self._init_player_dict()
 
     def procces_ans(self):
@@ -27,7 +27,7 @@ class PlayerManager(object):
                     else:
                         self._register_player(id)
 
-    def _register_player(self, id):
+     def _register_player(self, id):
         self.db.insert_new(id)
         self.players[id] = Player(self.db,
                                   self.messenger,
@@ -38,6 +38,6 @@ class PlayerManager(object):
         self.players = {}
         raw_players = self.db.get_players() #list 
         for player in raw_players:
-            self.players[player[UsersColumns.id.number]] = Player(self.db,
+            self.players[player[UsersColumns.id.value.number]] = Player(self.db,
                                                                   self.messenger,
                                                                   player)

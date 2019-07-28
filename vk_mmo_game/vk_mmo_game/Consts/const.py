@@ -1,7 +1,7 @@
 admins = 385124486, 308831692, 129640173
 db_name = "Game.db"
 random = 10 ** 100000
-table_users = "users"
+name_table_users = "users"
 quest_exp = 1
 top_range = 10
 

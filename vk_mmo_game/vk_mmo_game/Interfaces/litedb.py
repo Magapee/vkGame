@@ -11,7 +11,7 @@ class DB():
         self.name = db_name
         self.db = sqlite3.connect(const.db_name)
         self.cursor = self.db.cursor()
-        self._init_table(const.table_users, UsersColumns)
+        self._init_table(const.name_table_users, UsersColumns)
 
     def _init_table(self, table_name, columns_name): # initializing table_name db, creating it if not exists
         request = f'CREATE TABLE IF NOT EXISTS {table_name} ('
