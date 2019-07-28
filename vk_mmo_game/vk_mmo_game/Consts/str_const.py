@@ -94,8 +94,11 @@ class Messages():
     in_duel_with = "в сражении с"
     with_link = "по"
     finish_quest = "Квест окончен"
-    in_duel = "Вы находитесь в дуэли. Действие недоступно"
-    in_quest = "Вы находитесь в квесте. Действие недоступно"
+    you_in_duel = "Вы находитесь в дуэли,"
+    you_in_quest = "Вы находитесь в квесте,"
+    act_unnable = "действие недоступно"
+    un_duel = you_in_duel + ' ' + act_unnable
+    un_quest = you_in_quest + ' ' + act_unnable
     wrong_text = "Неизвестная команда"
 
 

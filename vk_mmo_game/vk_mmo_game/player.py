@@ -46,7 +46,7 @@ class Player(object):
                     #self.attack,
                     #self.health,
                     self.quest_end]
-        self.db.update_user(raw_user)
+        self.database.update_user(raw_user)
 
     def pull(self):
         raise NotImplementedError
@@ -87,13 +87,11 @@ class Player(object):
         raise NotImplementedError
 
     def customtxt(self, message):
-        #if (message == Buttons.duel or message == Buttons.quest) and self.in_duel:
-        #    self._send(Messages.in_duel)
-        #elif (message == Buttons.duel or message == Buttons.quest) and self.time_finish_quest is not None:
-        #    self._send(Messages.in_quest)
-        #else:
+        #if not self._check_for_dlink(message):
         #    self._send(Messages.wrong_text)
-        raise NotImplementedError
+        self._send(Messages.wrong_text)
+
+
     
     #programm interfaces
 

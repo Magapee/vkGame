@@ -5,6 +5,7 @@ from multiprocessing import RLock
 from player import Player
 from litedb import DB
 from str_const import UsersColumns
+from const import Begin
 
 
 class PlayerManager(object):
@@ -22,17 +23,18 @@ class PlayerManager(object):
         with RLock() as lock:
             if not event.from_me:
                 if event.type == VkEventType.MESSAGE_NEW and event.text:
+                    print(self.players)
                     if event.user_id in self.players:
                         self.players[event.user_id].process(event.text)
                     else:
                         self._register_player(id)
 
-     def _register_player(self, id):
-        self.db.insert_new(id)
+    def _register_player(self, id):
         self.players[id] = Player(self.db,
                                   self.messenger,
                                   (id, Begin.gold, Begin.exp, Begin.lvl, Begin.country, Begin.win,
                                    Begin.state, Begin.attack, Begin.health, Begin.quest_end))
+        self.players[id].commit()
 
     def _init_player_dict(self):
         self.players = {}
