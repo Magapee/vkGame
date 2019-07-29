@@ -5,6 +5,7 @@ from multiprocessing import RLock
 from player import Player
 from litedb import DB
 from str_const import UsersColumns
+from top import Top
 from const import Begin
 
 
@@ -23,7 +24,6 @@ class PlayerManager:
         with RLock() as lock:
             if not event.from_me:
                 if event.type == VkEventType.MESSAGE_NEW and event.text:
-                    print(self.players)
                     if event.user_id in self.players:
                         self.players[event.user_id].process(event.text)
                     else:
@@ -39,7 +39,10 @@ class PlayerManager:
     def _init_player_dict(self):
         self.players = {}
         raw_players = self.db.get_players() #list 
+        self.top = Top(raw_players, self.messenger)
         for player in raw_players:
             self.players[player[UsersColumns.id.value.number]] = Player(self.db,
                                                                   self.messenger,
+                                                                  self.top,
                                                                   player)
+        

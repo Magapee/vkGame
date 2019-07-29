@@ -7,10 +7,11 @@ import datetime
 import vk
 
 class Player(object): 
-    def __init__(self, database, messenger, raw_player):
+    def __init__(self, database, messenger, top, raw_player):
         #requred args
         self.database = database #database for players
         self.messenger = messenger
+        self.top = top
 
         self.id = raw_player[UsersColumns.id.value.number] # id of player
         #self.gold = raw_player[UsersColumns.gold.value.number]
@@ -68,16 +69,12 @@ class Player(object):
         self._send(Messages.ok)
 
     def show_top(self):
-        #top = database.select_order(UsersColumns.id.value.name + " , " + UsersColumns.winscounter.value.name, UsersColumns.winscounter.value.name)
-        #ids = top[:const.top_range]
-        #top_mes = ""
-        #for i in range(const.top_range):
-        #    if i < 3:
-        #        top_mes += str_const.Emoji.Medals[i + 1] + "№" + str(i + 1) + " " + str(links_to_players[ids[i]]) + ": " + str(top[i][1]) + "\n"
-        #    else:
-        #        top_mes += "№" + str(i + 1) + " " + str(links_to_players[ids[i]]) + ": " + str(top[i][1]) + "\n"
-        #return top_mes
-        raise NotImplementedError
+        top = self.top.raw_top
+        message = ''
+        for i in range(1, len(top) + 1):
+            message += f'{i} {top[i - 1][0]} {top[i - 1][1]}\n'
+        self._send(message)
+
 
     def generate_dlink(self):
         #link = "duel_" + str(self.id) + str(self.count_duels)
@@ -133,4 +130,18 @@ class Player(object):
         self._send(Messages.finish_quest)
 
     def _check_dlink(self):
+        #self._change_top()
         raise NotImplementedError
+        
+    def _change_top(self):
+        ind = 0
+        while (top_range - 1 - ind >= 0 
+               and self.winscounter > self.top.raw_top[top_range - 1 - ind][1]):
+            ind += 1
+        if top_range - 1 - ind < 0:
+            self.top.raw_top.insert(0, (self.id, self.winscounter))
+        elif ind != 0:
+            self.top.raw_top.insert(top_range - ind, (self.id, self.winscounter))
+        if len(self.top.raw_top) > top_range:
+            del self.top.raw_top[-1]
+        
