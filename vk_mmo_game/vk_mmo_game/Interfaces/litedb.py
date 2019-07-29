@@ -30,8 +30,9 @@ class DB():
         return self._execute(f'SELECT * FROM {str_const.users_tb}')
 
     def update_user(self, user):
-        request = f'INSERT OR REPLACE INTO {const.name_table_users} VALUES {user}'
-        return self._execute(request)
+        self.cursor.execute(f'INSERT OR REPLACE INTO {const.name_table_users} VALUES (?,?,?,?,?,?,?)', user)
+        self.db.commit()
+        #return self.cursor.fetchall()
         
     #def insert_new(self, user_id): # добавить нового пользователя user_id
     #    self._execute(f'INSERT INTO {const.table_users} VALUES ( {user_id}, {Begin.gold}, {Begin.exp}, {Begin.lvl}, ' 
