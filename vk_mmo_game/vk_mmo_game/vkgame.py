@@ -21,12 +21,9 @@ Manager.register('PlayerManager', PlayerManager)
 
 class Game():
     
-    def ans_proc(self, manager):
+    def listner_proc(self, manager):
         while True:
             manager.procces_ans()
-            
-    def not_ans_proc(self, manager):
-        raise NotImplementedError
 
     #def process(self):
     #    while self.is_running:
@@ -61,13 +58,8 @@ class Game():
 
         with Manager() as manager:
             self.player_manager = manager.PlayerManager()
-            #self.is_running = manager.Value('i', 1)
-            self.ans_thread = mp.Process(target = self.ans_proc,
+            self.listner_thread = mp.Process(target = self.ans_proc,
                                         args = (self.player_manager,))
-            self.not_ans_thread = mp.Process(target = self.not_ans_proc,
-                                            args = (self.player_manager,))
             self.ans_thread.start()
+            logger.log("Initialization complete!")
             self.ans_thread.join()
-            #self.not_ans_thread.start()
-
-        logger.log("Initialization complete!")

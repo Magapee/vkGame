@@ -8,7 +8,7 @@ from str_const import UsersColumns
 from const import Begin
 
 
-class PlayerManager(object):
+class PlayerManager:
     def __init__(self):
         self.db = DB(const.db_name)
         self.messenger = vk.Messenger()

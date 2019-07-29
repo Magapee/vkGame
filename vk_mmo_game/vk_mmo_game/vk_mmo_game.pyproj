@@ -48,7 +48,9 @@
     <Compile Include="OLD\OLD_player_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Consts\vk_token.py" />
+    <Compile Include="Consts\vk_token.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
