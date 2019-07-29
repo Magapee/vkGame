@@ -37,7 +37,7 @@ class Player(object):
     #orm
 
     def commit(self): #oRm method
-        raw_user = [self.id,
+        raw_user = (self.id,
                     #self.gold,
                     self.exp,
                     self.lvl,
@@ -46,7 +46,7 @@ class Player(object):
                     self.state,
                     #self.attack,
                     #self.health,
-                    self.quest_end]
+                    self.quest_end)
         self.database.update_user(raw_user)
 
     def pull(self):

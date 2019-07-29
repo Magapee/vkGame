@@ -22,23 +22,15 @@ class DB():
         self._execute(request)
 
     def _execute(self, statement):
-        print(2)
         self.cursor.execute(statement)
         self.db.commit()
         return self.cursor.fetchall()
 
-                       
     def get_players(self): # returns array of users
         return self._execute(f'SELECT * FROM {str_const.users_tb}')
 
     def update_user(self, user):
-        request = f'INSERT OR REPLACE INTO {const.name_table_users}('
-        for el in user:
-            request += str(el) + ', '
-        request = request[0:-2]
-        request += ')'
-        print(request)
-        print(1)
+        request = f'INSERT OR REPLACE INTO {const.name_table_users} VALUES {user}'
         return self._execute(request)
         
     #def insert_new(self, user_id): # добавить нового пользователя user_id
