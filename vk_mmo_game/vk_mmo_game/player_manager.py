@@ -10,7 +10,9 @@ from const import Begin
 
 
 class PlayerManager:
-    def __init__(self):
+    def __init__(self, eventsQueue):
+        self.eventsQueue = eventsQueue
+
         self.db = DB(const.db_name)
         self.messenger = vk.Messenger()
         self._init_player_dict()
