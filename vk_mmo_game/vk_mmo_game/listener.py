@@ -8,11 +8,11 @@ class Listener(object):
 
     def process(self):
         while self.game_is_running:
-            events = self._check()
-            for event in events:
-                self.queue.put(event)
+            self._check()
 
     def _check(self):
-        return self.messenger.check()
+        events = self.messenger.check()
+        for event in events:
+            self.queue.put(event)
 
 
