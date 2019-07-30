@@ -1,4 +1,5 @@
 import queue
+import datetime
 import const
 import vk
 from vk_api.longpoll import VkEventType
@@ -20,7 +21,7 @@ class PlayerManager:
         self._init_player_dict()
 
     def process_ans(self):
-        print('Manager aq')
+        a = datetime.datetime.now()
         events = []
         try:
             while True:
@@ -29,16 +30,14 @@ class PlayerManager:
             pass
         for el in events:
             self._proc_event(el)
-        print('Manager unaq')
+            print((datetime.datetime.now() - a).microseconds)
 
     def _proc_event(self, event):
         with RLock() as lock:
-            if not event.from_me:
-                if event.type == VkEventType.MESSAGE_NEW and event.text:
-                    if event.user_id in self.players:
-                        self.players[event.user_id].process(event.text)
-                    else:
-                        self._register_player(id)
+            if event.user_id in self.players:
+                self.players[event.user_id].process(event.text)
+            else:
+                self._register_player(id)
 
     def _register_player(self, id):
         self.players[id] = Player(self.db,

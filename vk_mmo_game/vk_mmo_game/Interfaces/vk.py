@@ -26,7 +26,12 @@ class Messenger:
         self.vk.messages.send(user_id = id, message = mes, random_id = random.randrange(1, const.random), keyboard = keyboard)
 
     def check(self): # Получить события от сервера вк 
-        return self.long_poll.check()
+        a = self.long_poll.check()
+        b = []
+        for event in a:
+            if not event.from_me and event.type == VkEventType.MESSAGE_NEW and event.text:
+                b.append(event)
+        return b
 
     def _create_keyboard(self, list_string_buttons, is_one_time): # Создать клавиатуру с кнопками list_string_buttons
         table_buttons = []

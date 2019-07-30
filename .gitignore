@@ -142,3 +142,6 @@ _ReSharper*/
 
 #database
 *.db
+
+#pyperf
+*.pyperf
