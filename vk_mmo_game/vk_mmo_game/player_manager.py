@@ -1,7 +1,9 @@
+import queue
 import const
 import vk
 from vk_api.longpoll import VkEventType
 from multiprocessing import RLock
+import logger
 from player import Player
 from litedb import DB
 from str_const import UsersColumns
@@ -17,10 +19,17 @@ class PlayerManager:
         self.messenger = vk.Messenger()
         self._init_player_dict()
 
-    def procces_ans(self):
-        events = self.messenger.check()
+    def process_ans(self):
+        print('Manager aq')
+        events = []
+        try:
+            while True:
+                events.append(self.eventsQueue.get(block=False))
+        except queue.Empty:
+            pass
         for el in events:
             self._proc_event(el)
+        print('Manager unaq')
 
     def _proc_event(self, event):
         with RLock() as lock:

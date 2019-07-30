@@ -6,36 +6,27 @@ from player_manager import PlayerManager
 import logger
 import const
 import str_const
+from listener import Listener
 
 __version__="0.1.0a" #object update
 
 
+def listener_procf(queue, game_is_running):
+    listener = Listener(queue, game_is_running)
+    listener.process()
 
 class Game():
     
-    def listner_proc(self, manager):
-        while True:
-            manager.procces_ans()
-
-    #def process(self):
-    #    while self.is_running:
-    #        self.quest.check_quest(self.vk, self.database)
-    #        #logger.log("Begin check")
-    #        events = self.longpoll.check()
-    #        #logger.log("End check")
-    #        if len(events) != 0:
-    #            for i in range(len(events)): #TODO: solve useless "if"
-    #                event = events[i]
-    #                if event:
-    #                    self._proc_event(event
 
     def __init__(self):
         logger.logger() #I fuck that shit
         logger.log("Initialization...")
-        
         str_const.set_fracs_list()
+        self.game_is_running = True
         eventsQueue = mp.Queue()
         self.player_manager = PlayerManager(eventsQueue)
-
+        listener_proc = mp.Process(target=listener_procf, args=(eventsQueue, self.game_is_running))
+        listener_proc.start()
         logger.log("Initialization complete!")
-        self.ans_thread.join()
+        while self.game_is_running:
+            self.player_manager.process_ans()
